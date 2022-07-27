@@ -111,9 +111,13 @@ void ike::Transform::localMove(const tnl::Vector3 value) {
 		return;
 	}
 	tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, mesh_->rot_q_);
-	mesh_->pos_ += axis;
+	Move(axis);
 }
 
 void ike::Transform::Rotate(const tnl::Vector3 value) {
 	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), tnl::ToRadian(value.length()));
+}
+
+void ike::Transform::Move(const tnl::Vector3 value) {
+	mesh_->pos_ += value;
 }
