@@ -19,7 +19,7 @@ void gameMain(float delta_time) {
 		mesh = dxe::Mesh::CreateBoxMV(50);
 		mesh->setTexture("graphics/box.bmp");
 		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		tr_ = new ike::Transform(mesh);
+		tr_ = new ike::Transform();
 		ob_ = new ike::Object(mesh);
 		init = true;
 	}

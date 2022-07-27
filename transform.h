@@ -9,11 +9,9 @@ namespace ike {
 	class Transform {
 
 	public:
-		Transform(dxe::Mesh* mesh);
+		Transform();
 		~Transform();
 
-
-		dxe::Mesh* mesh_ = nullptr;
 
 		tnl::Vector3 getPosition() const;
 		void setPosition(const tnl::Vector3 position);
@@ -37,11 +35,17 @@ namespace ike {
 
 	private:
 
+		tnl::Quaternion rotation_;
+		tnl::Vector3 position_;
+
 		Transform* parent_ = nullptr;
 		std::list<ike::Transform*> children_;
 
 		void addChild(Transform* data);
 		void removeChild(Transform* data);
+
+		void followRotate(const tnl::Vector3 value);
+		void followMove(const tnl::Vector3 value);
 
 	};
 }
