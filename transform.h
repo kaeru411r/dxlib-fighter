@@ -4,9 +4,10 @@
 #include "game_main.h"
 #include "../dxlib_ext/dxlib_ext.h"
 #include <list>
+#include "tree.h"
 
 namespace ike {
-	class Transform {
+	class Transform : public ike::Tree {
 
 	public:
 		Transform();
@@ -19,9 +20,6 @@ namespace ike {
 		void setRotation(const tnl::Quaternion rotation);
 
 
-		void setParent(Transform* data);
-		void removeAllChildren();
-		bool childrenContains(const Transform* data);
 
 		tnl::Vector3 up() const;
 		tnl::Vector3 left() const;
@@ -37,12 +35,6 @@ namespace ike {
 
 		tnl::Quaternion rotation_;
 		tnl::Vector3 position_;
-
-		Transform* parent_ = nullptr;
-		std::list<ike::Transform*> children_;
-
-		void addChild(Transform* data);
-		void removeChild(Transform* data);
 
 		void followRotate(const tnl::Vector3 value);
 		void followMove(const tnl::Vector3 value);

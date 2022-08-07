@@ -4,10 +4,10 @@
 #include "../dxlib_ext/dxlib_ext.h"
 #include "transform.h"
 #include "object .h"
+#include "tree.h"
 
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
-ike::Transform* tr_ = nullptr;
 ike::Object* ob_ = nullptr;
 
 bool init = false;
@@ -19,8 +19,15 @@ void gameMain(float delta_time) {
 		mesh = dxe::Mesh::CreateBoxMV(50);
 		mesh->setTexture("graphics/box.bmp");
 		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		tr_ = new ike::Transform();
+		ike::Transform* tr_ = new ike::Transform; 
 		ob_ = new ike::Object(mesh);
+		ike::Tree* t = tr_;
+		auto a = typeid(t).before(typeid(tr_));/*
+		auto b = typeid(*t).before();
+		auto c = typeid(tr_).before();
+		auto d = typeid(*tr_).before();*/
+		//a = "string";
+		tr_->setParent(t);
 		init = true;
 	}
 	tnl::Vector3 vec = { 0,0,0 };
