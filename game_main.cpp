@@ -11,7 +11,12 @@ dxe::Mesh* mesh = nullptr;
 ike::Object* ob_ = nullptr;
 
 bool init = false;
+class A : public ike::Tree {
+public:
+	A() {}
+	~A() {}
 
+};
 void gameMain(float delta_time) {
 	if (!init) {
 		camera = new dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
@@ -22,12 +27,13 @@ void gameMain(float delta_time) {
 		ike::Transform* tr_ = new ike::Transform; 
 		ob_ = new ike::Object(mesh);
 		ike::Tree* t = tr_;
+
 		auto a = typeid(t).before(typeid(tr_));/*
 		auto b = typeid(*t).before();
 		auto c = typeid(tr_).before();
 		auto d = typeid(*tr_).before();*/
 		//a = "string";
-		tr_->setParent(t);
+
 		init = true;
 	}
 	tnl::Vector3 vec = { 0,0,0 };
