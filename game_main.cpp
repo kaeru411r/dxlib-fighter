@@ -31,8 +31,9 @@ void gameMain(float delta_time) {
 		mesh2->setTexture("graphics/box.bmp");
 		mesh2->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
 		ob2_ = new ike::Object(mesh2);
-		ob2_->transform->Move({ 5, 5, 5 });
-		ike::Transform* tr_ = new ike::Transform(mesh, mesh2);
+		ob2_->transform->move({ 5, 5, 5 });
+		ike::Transform* tr = ob_->transform;
+		tr->localMove({ 0,0,0 });
 		//ike::Tree* t = tr_;
 		ob2_->transform->setParent(ob_->transform);
 
@@ -67,6 +68,7 @@ void gameMain(float delta_time) {
 
 	camera->update();
 
+	mesh2->render(camera);
 	mesh->render(camera);
 
 	DrawGridGround(50, 20);

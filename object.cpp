@@ -2,7 +2,7 @@
 using namespace ike;
 
 Object::Object(dxe::Mesh* mesh) {
-	transform = new ike::Transform();
+	transform = new ike::MeshTransform(mesh);
 }
 
 Object::~Object() {

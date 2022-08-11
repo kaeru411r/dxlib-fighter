@@ -34,11 +34,11 @@ namespace ike {
 		tnl::Vector3 left() const;
 		tnl::Vector3 front() const;
 
-		void localRotate(const tnl::Vector3 value);
-		void localMove(const tnl::Vector3 value);
+		virtual void localRotate(const tnl::Vector3 value);
+		virtual void localMove(const tnl::Vector3 value);
 
-		void Rotate(const tnl::Vector3 value);
-		void Move(const tnl::Vector3 value);
+		virtual void rotate(const tnl::Vector3 value);
+	 	virtual void move(const tnl::Vector3 value);
 
 	private:
 

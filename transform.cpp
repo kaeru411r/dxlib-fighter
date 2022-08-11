@@ -42,7 +42,7 @@ void ike::Transform::localRotate(const tnl::Vector3 value) {
 		return;
 	}
 	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), rotation_);
-	Rotate(axis * value.length());
+	rotate(axis * value.length());
 }
 
 void ike::Transform::localMove(const tnl::Vector3 value) {
@@ -50,24 +50,24 @@ void ike::Transform::localMove(const tnl::Vector3 value) {
 		return;
 	}
 	tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, rotation_);
-	Move(axis);
+	move(axis);
 }
 
-void ike::Transform::Rotate(const tnl::Vector3 value) {
+void ike::Transform::rotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
 	rotation_ *= tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), tnl::ToRadian(value.length()));
 }
 
-void ike::Transform::Move(const tnl::Vector3 value) {
+void ike::Transform::move(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
 	position_ += value;
 	for (ike::Tree* t : getChildren()) {
 		ike::Transform* tr = static_cast<ike::Transform*>(t);
-		tr->Move(value);
+		tr->move(value);
 	}
 }
 
