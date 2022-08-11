@@ -4,7 +4,8 @@
 ike::Tree::Tree() {
 }
 ike::Tree::~Tree() {
-
+	setParent(nullptr);
+	removeAllChildren();
 }
 
 void ike::Tree::setParent(Tree* data) {

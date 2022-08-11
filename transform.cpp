@@ -5,8 +5,6 @@
 ike::Transform::Transform() {
 }
 ike::Transform::~Transform() {
-	setParent(nullptr);
-	removeAllChildren();
 }
 
 tnl::Vector3 ike::Transform::getPosition() const {
