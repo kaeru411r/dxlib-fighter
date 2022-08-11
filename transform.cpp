@@ -4,6 +4,12 @@
 
 ike::Transform::Transform() {
 }
+ike::Transform::Transform(dxe::Mesh* mesh) {
+	meshes_.push_back(mesh);
+}
+ike::Transform::Transform(const std::list<dxe::Mesh*> meshes) {
+	meshes_ = meshes;
+}
 ike::Transform::~Transform() {
 }
 

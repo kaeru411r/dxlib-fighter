@@ -8,6 +8,7 @@
 
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
+dxe::Mesh* mesh2 = nullptr;
 ike::Object* ob_ = nullptr;
 ike::Object* ob2_ = nullptr;
 
@@ -25,14 +26,14 @@ void gameMain(float delta_time) {
 		mesh = dxe::Mesh::CreateBoxMV(50);
 		mesh->setTexture("graphics/box.bmp");
 		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		ike::Transform* tr_ = new ike::Transform;
 		ob_ = new ike::Object(mesh);
-		mesh = dxe::Mesh::CreateBoxMV(50);
-		mesh->setTexture("graphics/box.bmp");
-		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		ob2_ = new ike::Object(mesh);
+		mesh2 = dxe::Mesh::CreateBoxMV(50);
+		mesh2->setTexture("graphics/box.bmp");
+		mesh2->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
+		ob2_ = new ike::Object(mesh2);
 		ob2_->transform->Move({ 5, 5, 5 });
-		ike::Tree* t = tr_;
+		ike::Transform* tr_ = new ike::Transform(mesh, mesh2);
+		//ike::Tree* t = tr_;
 		ob2_->transform->setParent(ob_->transform);
 
 		init = true;
