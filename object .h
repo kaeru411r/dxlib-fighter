@@ -14,6 +14,7 @@ namespace ike {
 		~Object();
 		ike::Transform* transform;
 
+
 	private:
 	};
 }

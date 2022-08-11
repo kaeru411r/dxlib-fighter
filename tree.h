@@ -6,7 +6,7 @@
 
 namespace ike {
 
-
+	
 	class Tree{
 
 	public:
@@ -17,8 +17,13 @@ namespace ike {
 		void removeAllChildren();
 		bool childrenContains(const Tree* data);
 
+		Tree* getParent() const;
+		std::list<Tree*> getChildren() const;
+
+
 
 	private:
+
 
 		Tree* parent_ = nullptr;
 		std::list<Tree*> children_;

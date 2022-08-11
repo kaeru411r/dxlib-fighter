@@ -9,6 +9,7 @@
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
 ike::Object* ob_ = nullptr;
+ike::Object* ob2_ = nullptr;
 
 bool init = false;
 class A : public ike::Tree {
@@ -24,15 +25,15 @@ void gameMain(float delta_time) {
 		mesh = dxe::Mesh::CreateBoxMV(50);
 		mesh->setTexture("graphics/box.bmp");
 		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		ike::Transform* tr_ = new ike::Transform; 
+		ike::Transform* tr_ = new ike::Transform;
 		ob_ = new ike::Object(mesh);
+		mesh = dxe::Mesh::CreateBoxMV(50);
+		mesh->setTexture("graphics/box.bmp");
+		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
+		ob2_ = new ike::Object(mesh);
+		ob2_->transform->Move({ 5, 5, 5 });
 		ike::Tree* t = tr_;
-
-		auto a = typeid(t).before(typeid(tr_));/*
-		auto b = typeid(*t).before();
-		auto c = typeid(tr_).before();
-		auto d = typeid(*tr_).before();*/
-		//a = "string";
+		ob2_->transform->setParent(ob_->transform);
 
 		init = true;
 	}
@@ -59,6 +60,7 @@ void gameMain(float delta_time) {
 		vec += tnl::Vector3::up * 2;
 	}
 	ob_->transform->localMove(tnl::Vector3::front);
+	ob2_->transform;
 
 	ob_->transform->localRotate(vec);
 

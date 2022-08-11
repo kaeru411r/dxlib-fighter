@@ -50,6 +50,15 @@ bool ike::Tree::childrenContains(const Tree* data) {
 
 }
 
+
+ike::Tree* ike::Tree::getParent() const {
+	return parent_;
+
+}
+std::list<ike::Tree* > ike::Tree::getChildren() const {
+	return children_;
+}
+
 void ike::Tree::addChild(Tree* data) {
 	if (data == nullptr) {
 		return;
