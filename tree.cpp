@@ -45,9 +45,27 @@ bool ike::Tree::childrenContains(const Tree* data) {
 		if ((*it) == data) {
 			return true;
 		}
+		it++;
 	}
 	return false;
 
+}
+
+bool ike::Tree::allChildrenContains(const Tree* data) {
+	if (data == nullptr) {
+		return false;
+	}
+	std::list<Tree*>::iterator it = children_.begin();
+	while (it != children_.end()) {
+		if ((*it) == data) {
+			return true;
+		}
+		else if((*it)->allChildrenContains(data)) {
+			return true;
+		}
+		it++;
+	}
+	return false;
 }
 
 
