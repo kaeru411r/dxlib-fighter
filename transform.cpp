@@ -76,5 +76,5 @@ void ike::Transform::followRotate(const tnl::Vector3 value) {
 }
 
 void ike::Transform::followMove(const tnl::Vector3 value) {
-	position_ += value;
+	move(value);
 }

@@ -16,6 +16,7 @@ namespace ike {
 		void setParent(Tree* data);
 		void removeAllChildren();
 		bool childrenContains(const Tree* data);
+		bool allChildrenContains(const Tree* data);
 
 		Tree* getParent() const;
 		std::list<Tree*> getChildren() const;

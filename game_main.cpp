@@ -9,16 +9,12 @@
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
 dxe::Mesh* mesh2 = nullptr;
+dxe::Mesh* mesh3 = nullptr;
 ike::Object* ob_ = nullptr;
 ike::Object* ob2_ = nullptr;
+ike::Object* ob3_ = nullptr;
 
 bool init = false;
-class A : public ike::Tree {
-public:
-	A() {}
-	~A() {}
-
-};
 void gameMain(float delta_time) {
 	if (!init) {
 		camera = new dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
@@ -32,10 +28,19 @@ void gameMain(float delta_time) {
 		mesh2->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
 		ob2_ = new ike::Object(mesh2);
 		ob2_->transform->move({ 5, 5, 5 });
+		mesh3 = dxe::Mesh::CreateBoxMV(50);
+		mesh3->setTexture("graphics/box.bmp");
+		mesh3->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
+		ob3_ = new ike::Object(mesh3);
+		ob3_->transform->move({ 10, 10, 10 });
 		ike::Transform* tr = ob_->transform;
 		tr->localMove({ 0,0,0 });
 		//ike::Tree* t = tr_;
 		ob2_->transform->setParent(ob_->transform);
+		ob3_->transform->setParent(ob2_->transform);
+		if (ob_->transform->childrenContains(ob2_->transform)) {
+			int a = 0;
+		}
 
 		init = true;
 	}
@@ -68,6 +73,7 @@ void gameMain(float delta_time) {
 
 	camera->update();
 
+	mesh3->render(camera);
 	mesh2->render(camera);
 	mesh->render(camera);
 
