@@ -13,7 +13,7 @@ namespace ike {
 		Tree();
 		~Tree();
 
-		void setParent(Tree* data);
+		bool setParent(Tree* data);
 		void removeAllChildren();
 		bool childrenContains(const Tree* data);
 		bool allChildrenContains(const Tree* data);

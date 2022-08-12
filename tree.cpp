@@ -8,10 +8,14 @@ ike::Tree::~Tree() {
 	removeAllChildren();
 }
 
-void ike::Tree::setParent(Tree* data) {
+bool ike::Tree::setParent(Tree* data) {
 	std::string a = typeid(*this).name();
 	if (parent_ == data) {
-		return;
+		return false;
+	}
+	if (allChildrenContains(data)) {
+		while (ErrorLogFmtAdd("Error : 渡されたオブジェクトはこのオブジェクトの子オブジェクトです") != -1) {}
+		return false;
 	}
 	if (parent_ != nullptr) {
 		parent_->removeChild(this);
@@ -22,6 +26,7 @@ void ike::Tree::setParent(Tree* data) {
 			data->addChild(this);
 		}
 	}
+	return true;
 }
 void ike::Tree::removeAllChildren() {
 	auto it = children_.begin();

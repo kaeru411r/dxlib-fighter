@@ -38,6 +38,10 @@ void gameMain(float delta_time) {
 		//ike::Tree* t = tr_;
 		ob2_->transform->setParent(ob_->transform);
 		ob3_->transform->setParent(ob2_->transform);
+		if (ob_->transform->allChildrenContains(ob3_->transform)) {
+			int a = 0;
+		}
+		ob_->transform->setParent(ob3_->transform);
 		if (ob_->transform->childrenContains(ob2_->transform)) {
 			int a = 0;
 		}
