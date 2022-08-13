@@ -37,6 +37,18 @@ void ike::Transform::setScale(const tnl::Vector3 scale) {
 	}
 }
 
+
+ike::Transform* ike::Transform::getParent() const {
+	return static_cast<ike::Transform*>(ike::Tree::getParent());
+}
+std::list<ike::Transform*> ike::Transform::getChildren() const {
+	std::list<ike::Transform*> list;
+	for (ike::Tree* t : ike::Tree::getChildren()) {
+		list.push_back(static_cast<ike::Transform*>(t));
+	}
+	return list;
+}
+
 tnl::Vector3 ike::Transform::up() const {
 	return tnl::Vector3::TransformCoord(tnl::Vector3::up, rotation_);
 }
