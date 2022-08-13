@@ -34,16 +34,17 @@ namespace ike {
 		tnl::Vector3 left() const;
 		tnl::Vector3 front() const;
 
-		virtual void localRotate(const tnl::Vector3 value);
+		virtual void localEulerRotate(const tnl::Vector3 value);
 		virtual void localMove(const tnl::Vector3 value);
 
-		virtual void rotate(const tnl::Vector3 value);
+		virtual void eulerRotate(const tnl::Vector3 value);
 	 	virtual void move(const tnl::Vector3 value);
 
 	private:
 
 		tnl::Quaternion rotation_;
 		tnl::Vector3 position_;
+		tnl::Vector3 scale_;
 
 		std::list<dxe::Mesh*> meshes_;
 

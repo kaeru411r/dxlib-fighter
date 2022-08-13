@@ -37,12 +37,12 @@ tnl::Vector3 ike::Transform::front() const {
 }
 
 
-void ike::Transform::localRotate(const tnl::Vector3 value) {
+void ike::Transform::localEulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
 	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), rotation_);
-	rotate(axis * value.length());
+	eulerRotate(axis * value.length());
 }
 
 void ike::Transform::localMove(const tnl::Vector3 value) {
@@ -53,7 +53,7 @@ void ike::Transform::localMove(const tnl::Vector3 value) {
 	move(axis);
 }
 
-void ike::Transform::rotate(const tnl::Vector3 value) {
+void ike::Transform::eulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}

@@ -73,7 +73,7 @@ void gameMain(float delta_time) {
 	ob_->transform->localMove(tnl::Vector3::front);
 	ob2_->transform;
 
-	ob_->transform->localRotate(vec);
+	ob_->transform->localEulerRotate(vec);
 
 	camera->update();
 
