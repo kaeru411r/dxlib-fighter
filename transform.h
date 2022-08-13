@@ -27,6 +27,8 @@ namespace ike {
 		void setPosition(const tnl::Vector3 position);
 		tnl::Quaternion getRotation() const;
 		void setRotation(const tnl::Quaternion rotation);
+		tnl::Vector3 getScale() const;
+		virtual void setScale(const tnl::Vector3 scale);
 
 
 
@@ -44,12 +46,13 @@ namespace ike {
 
 		tnl::Quaternion rotation_;
 		tnl::Vector3 position_;
-		tnl::Vector3 scale_;
+		tnl::Vector3 scale_ = {1, 1, 1};
 
 		std::list<dxe::Mesh*> meshes_;
 
 		void followRotate(const tnl::Vector3 value);
 		void followMove(const tnl::Vector3 value);
+		void followScale(const tnl::Vector3 value);
 
 	};
 }

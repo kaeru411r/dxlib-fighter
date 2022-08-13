@@ -71,6 +71,7 @@ void gameMain(float delta_time) {
 		vec += tnl::Vector3::up * 2;
 	}
 	ob_->transform->localMove(tnl::Vector3::front);
+	ob_->transform->setScale(ob_->transform->getScale() * 1.01);
 	ob2_->transform;
 
 	ob_->transform->localEulerRotate(vec);

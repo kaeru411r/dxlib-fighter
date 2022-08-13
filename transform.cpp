@@ -25,6 +25,17 @@ tnl::Quaternion ike::Transform::getRotation() const {
 void ike::Transform::setRotation(const tnl::Quaternion rotation) {
 	rotation_ = rotation;
 }
+tnl::Vector3 ike::Transform::getScale() const {
+	return scale_;
+}
+void ike::Transform::setScale(const tnl::Vector3 scale) {
+	tnl::Vector3 f = { scale.x / scale_.x, scale.y / scale_.y , scale.z / scale_.z };
+	scale_ = scale;
+	for (ike::Tree* c : getChildren()) {
+		ike::Transform* t = static_cast<ike::Transform*>(c);
+		t->followScale(f);
+	}
+}
 
 tnl::Vector3 ike::Transform::up() const {
 	return tnl::Vector3::TransformCoord(tnl::Vector3::up, rotation_);
@@ -77,4 +88,13 @@ void ike::Transform::followRotate(const tnl::Vector3 value) {
 
 void ike::Transform::followMove(const tnl::Vector3 value) {
 	move(value);
+}
+
+void ike::Transform::followScale(const tnl::Vector3 value) {
+	tnl::Vector3 s = { scale_.x * value.x, scale_.y * value.y , scale_.z * value.z };
+	tnl::Vector3 pp = static_cast<ike::Transform*>(getParent())->getPosition();
+	tnl::Vector3 lp = position_ - pp;
+	tnl::Vector3 lp2 = { lp.x * value.x, lp.y * value.y , lp.z * value.z };
+	localMove(lp2 - lp);
+	setScale(s);
 }
