@@ -31,8 +31,7 @@ tnl::Vector3 ike::Transform::getScale() const {
 void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
 	tnl::Vector3 f = { scale.x / scale_.x, scale.y / scale_.y , scale.z / scale_.z };
 	scale_ = scale;
-	for (ike::Tree* c : getChildren()) {
-		ike::Transform* t = static_cast<ike::Transform*>(c);
+	for (ike::Transform* t : getChildren()) {
 		t->followScale(f);
 	}
 }
@@ -100,8 +99,7 @@ void ike::Transform::move(const tnl::Vector3 value) {
 		return;
 	}
 	position_ += value;
-	for (ike::Tree* t : getChildren()) {
-		ike::Transform* tr = static_cast<ike::Transform*>(t);
+	for (ike::Transform* tr : getChildren()) {
 		tr->move(value);
 	}
 }
@@ -116,7 +114,7 @@ void ike::Transform::followMove(const tnl::Vector3 value) {
 
 void ike::Transform::followScale(const tnl::Vector3 value) {
 	tnl::Vector3 s = { scale_.x * value.x, scale_.y * value.y , scale_.z * value.z };
-	tnl::Vector3 pp = static_cast<ike::Transform*>(getParent())->getPosition();
+	tnl::Vector3 pp = getParent()->getPosition();
 	tnl::Vector3 lp = position_ - pp;
 	tnl::Vector3 lp2 = { lp.x * value.x, lp.y * value.y , lp.z * value.z };
 	localMove(lp2 - lp);
