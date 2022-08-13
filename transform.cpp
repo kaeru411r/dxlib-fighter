@@ -28,7 +28,7 @@ void ike::Transform::setRotation(const tnl::Quaternion rotation) {
 tnl::Vector3 ike::Transform::getScale() const {
 	return scale_;
 }
-void ike::Transform::setScale(const tnl::Vector3 scale) {
+void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
 	tnl::Vector3 f = { scale.x / scale_.x, scale.y / scale_.y , scale.z / scale_.z };
 	scale_ = scale;
 	for (ike::Tree* c : getChildren()) {
@@ -38,8 +38,13 @@ void ike::Transform::setScale(const tnl::Vector3 scale) {
 }
 
 
+
+bool ike::Transform::setParent(Transform* data) {
+	ike::Tree::setParent(data);
+}
+
 ike::Transform* ike::Transform::getParent() const {
-	return static_cast<ike::Transform*>(ike::Tree::getParent());
+	return static_cast<Transform*>(ike::Tree::getParent());
 }
 std::list<ike::Transform*> ike::Transform::getChildren() const {
 	std::list<ike::Transform*> list;
@@ -47,6 +52,13 @@ std::list<ike::Transform*> ike::Transform::getChildren() const {
 		list.push_back(static_cast<ike::Transform*>(t));
 	}
 	return list;
+}
+
+bool ike::Transform::childrenContains(const Transform* data) {
+	return ike::Tree::childrenContains(data);
+}
+bool ike::Transform::allChildrenContains(const Transform* data) {
+	return ike::Tree::allChildrenContains(data);
 }
 
 tnl::Vector3 ike::Transform::up() const {

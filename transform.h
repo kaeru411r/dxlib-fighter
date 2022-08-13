@@ -31,8 +31,13 @@ namespace ike {
 		virtual void setScale(const tnl::Vector3 scale);
 
 
+		bool setParent(Transform* data);
+
 		Transform* getParent() const;
 		std::list<Transform*> getChildren() const;
+
+		bool childrenContains(const Transform* data);
+		bool allChildrenContains(const Transform* data);
 
 
 
