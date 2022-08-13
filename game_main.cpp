@@ -45,6 +45,7 @@ void gameMain(float delta_time) {
 		if (ob_->transform->childrenContains(ob2_->transform)) {
 			int a = 0;
 		}
+		auto c = ob_->transform->getChildren();
 
 		init = true;
 	}
