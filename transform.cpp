@@ -39,7 +39,7 @@ void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
 
 
 bool ike::Transform::setParent(Transform* data) {
-	ike::Tree::setParent(data);
+	return ike::Tree::setParent(data);
 }
 
 ike::Transform* ike::Transform::getParent() const {
