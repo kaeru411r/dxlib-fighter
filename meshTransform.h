@@ -16,8 +16,8 @@ namespace ike {
 		void move(const tnl::Vector3 value);
 		void eulerRotate(const tnl::Vector3 value);
 
-		void localMove(const tnl::Vector3 value);
-		void localEulerRotate(const tnl::Vector3 value);
+		void ownMove(const tnl::Vector3 value);
+		void ownEulerRotate(const tnl::Vector3 value);
 
 		
 

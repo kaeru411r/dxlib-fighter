@@ -17,13 +17,13 @@ void ike::MeshTransform::eulerRotate(const tnl::Vector3 value) {
 }
 
 
-void ike::MeshTransform::localMove(const tnl::Vector3 value) {
-	ike::Transform::localMove(value);
+void ike::MeshTransform::ownMove(const tnl::Vector3 value) {
+	ike::Transform::ownMove(value);
 	mesh_->pos_ = getPosition();
 }
 
 
-void ike::MeshTransform::localEulerRotate(const tnl::Vector3 value) {
-	ike::Transform::localEulerRotate(value);
+void ike::MeshTransform::ownEulerRotate(const tnl::Vector3 value) {
+	ike::Transform::ownEulerRotate(value);
 	mesh_->rot_q_ = getRotation();
 }

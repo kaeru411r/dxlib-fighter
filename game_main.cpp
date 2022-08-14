@@ -34,7 +34,7 @@ void gameMain(float delta_time) {
 		ob3_ = new ike::Object(mesh3);
 		ob3_->transform->move({ 10, 10, 10 });
 		ike::Transform* tr = ob_->transform;
-		tr->localMove({ 0,0,0 });
+		tr->ownMove({ 0,0,0 });
 		//ike::Tree* t = tr_;
 		ob2_->transform->setParent(ob_->transform);
 		ob3_->transform->setParent(ob2_->transform);
@@ -71,11 +71,11 @@ void gameMain(float delta_time) {
 	if (tnl::Input::IsKeyDown(eKeys::KB_E)) {
 		vec += tnl::Vector3::up * 2;
 	}
-	ob_->transform->localMove(tnl::Vector3::front);
+	ob_->transform->ownMove(tnl::Vector3::front);
 	ob_->transform->setScale(ob_->transform->getScale() * 1.01);
 	ob2_->transform;
 
-	ob_->transform->localEulerRotate(vec);
+	ob_->transform->ownEulerRotate(vec);
 
 	camera->update();
 

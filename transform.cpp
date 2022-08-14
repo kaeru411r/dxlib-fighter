@@ -71,7 +71,7 @@ tnl::Vector3 ike::Transform::front() const {
 }
 
 
-void ike::Transform::localEulerRotate(const tnl::Vector3 value) {
+void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
@@ -79,7 +79,7 @@ void ike::Transform::localEulerRotate(const tnl::Vector3 value) {
 	eulerRotate(axis * value.length());
 }
 
-void ike::Transform::localMove(const tnl::Vector3 value) {
+void ike::Transform::ownMove(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
@@ -117,6 +117,6 @@ void ike::Transform::followScale(const tnl::Vector3 value) {
 	tnl::Vector3 pp = getParent()->getPosition();
 	tnl::Vector3 lp = position_ - pp;
 	tnl::Vector3 lp2 = { lp.x * value.x, lp.y * value.y , lp.z * value.z };
-	localMove(lp2 - lp);
+	ownMove(lp2 - lp);
 	setScale(s);
 }
