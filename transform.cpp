@@ -4,12 +4,6 @@
 
 ike::Transform::Transform() {
 }
-ike::Transform::Transform(dxe::Mesh* mesh) {
-	meshes_.push_back(mesh);
-}
-ike::Transform::Transform(const std::list<dxe::Mesh*> meshes) {
-	meshes_ = meshes;
-}
 ike::Transform::~Transform() {
 }
 
@@ -17,8 +11,9 @@ tnl::Vector3 ike::Transform::getPosition() const {
 	return position_;
 }
 void ike::Transform::setPosition(const tnl::Vector3 position) {
+	tnl::Vector3 delta = position - position_;
 	for (ike::Transform* tr : getChildren()) {
-		tr->setPosition(tr->position_ + position - position_);
+		tr->setPosition(tr->position_ + delta);
 	}
 	position_ = position;
 }
@@ -42,6 +37,12 @@ tnl::Quaternion ike::Transform::getRotation() const {
 	return rotation_;
 }
 void ike::Transform::setRotation(const tnl::Quaternion rotation) {
+	tnl::Vector3 delta = rotation.getEuler() - rotation_.getEuler();
+	printfDx("%f, %f, %f\n", delta.x, delta.y, delta.z);
+
+	for (ike::Transform* tr : getChildren()) {
+		tr->eulerRotate(delta);
+	}
 	rotation_ = rotation;
 }
 tnl::Vector3 ike::Transform::getScale() const {
@@ -110,7 +111,7 @@ void ike::Transform::eulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	rotation_ *= tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), tnl::ToRadian(value.length()));
+	setRotation(rotation_ * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length()));
 }
 
 void ike::Transform::move(const tnl::Vector3 value) {

@@ -11,15 +11,6 @@ namespace ike {
 
 	public:
 		Transform();
-		Transform(dxe::Mesh* mesh);
-		Transform(const std::list<dxe::Mesh*> meshes);
-		template<typename... tMeshes>
-		Transform(tMeshes... meshes) {
-			dxe::Mesh* ms[] = { static_cast<dxe::Mesh*>(meshes)... };
-			for (dxe::Mesh* m : ms) {
-				meshes_.push_back(m);
-			}
-		}
 		~Transform();
 
 
@@ -68,8 +59,6 @@ namespace ike {
 		tnl::Quaternion rotation_;
 		tnl::Vector3 position_;
 		tnl::Vector3 scale_ = {1, 1, 1};
-
-		std::list<dxe::Mesh*> meshes_;
 
 		void followRotate(const tnl::Vector3 value);
 		void followMove(const tnl::Vector3 value);
