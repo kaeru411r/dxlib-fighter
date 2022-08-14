@@ -24,9 +24,12 @@ namespace ike {
 
 
 		tnl::Vector3 getPosition() const;
-		void setPosition(const tnl::Vector3 position);
+		virtual void setPosition(const tnl::Vector3 position);
+
 		tnl::Vector3 getLocalPosition() const;
-		void setLocalPosition(const tnl::Vector3 position);
+		virtual void setLocalPosition(const tnl::Vector3 position);
+
+
 		tnl::Quaternion getRotation() const;
 		void setRotation(const tnl::Quaternion rotation);/*
 		tnl::Quaternion getLocalRotation() const;
@@ -52,13 +55,13 @@ namespace ike {
 		tnl::Vector3 front() const;
 
 		virtual void ownEulerRotate(const tnl::Vector3 value);
-		virtual void ownMove(const tnl::Vector3 value);
+		void ownMove(const tnl::Vector3 value);
 
 		//virtual void localEulerRotate(const tnl::Vector3 value);
 		//virtual void localMove(const tnl::Vector3 value);
 
 		virtual void eulerRotate(const tnl::Vector3 value);
-	 	virtual void move(const tnl::Vector3 value);
+	 	void move(const tnl::Vector3 value);
 
 	private:
 

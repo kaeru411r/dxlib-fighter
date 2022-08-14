@@ -5,8 +5,9 @@ ike::MeshTransform::MeshTransform(dxe::Mesh* mesh) {
 	mesh_ = mesh;
 }
 
-void ike::MeshTransform::move(const tnl::Vector3 value) {
-	ike::Transform::move(value);
+
+void ike::MeshTransform::setPosition(const tnl::Vector3 position) {
+	ike::Transform::setPosition(position);
 	mesh_->pos_ = getPosition();
 }
 
@@ -17,10 +18,6 @@ void ike::MeshTransform::eulerRotate(const tnl::Vector3 value) {
 }
 
 
-void ike::MeshTransform::ownMove(const tnl::Vector3 value) {
-	ike::Transform::ownMove(value);
-	mesh_->pos_ = getPosition();
-}
 
 
 void ike::MeshTransform::ownEulerRotate(const tnl::Vector3 value) {

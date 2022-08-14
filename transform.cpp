@@ -17,6 +17,9 @@ tnl::Vector3 ike::Transform::getPosition() const {
 	return position_;
 }
 void ike::Transform::setPosition(const tnl::Vector3 position) {
+	for (ike::Transform* tr : getChildren()) {
+		tr->setPosition(tr->position_ + position - position_);
+	}
 	position_ = position;
 }
 tnl::Vector3 ike::Transform::getLocalPosition() const {
@@ -114,10 +117,7 @@ void ike::Transform::move(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	position_ += value;
-	for (ike::Transform* tr : getChildren()) {
-		tr->move(value);
-	}
+	setPosition(position_ + value);
 }
 
 void ike::Transform::followRotate(const tnl::Vector3 value) {
