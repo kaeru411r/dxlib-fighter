@@ -19,6 +19,22 @@ tnl::Vector3 ike::Transform::getPosition() const {
 void ike::Transform::setPosition(const tnl::Vector3 position) {
 	position_ = position;
 }
+tnl::Vector3 ike::Transform::getLocalPosition() const {
+	if (getParent() != nullptr) {
+		return position_ - getParent()->position_;
+	}
+	else {
+		return position_;
+	}
+}
+void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
+	if (getParent() != nullptr) {
+		setPosition(getParent()->position_ + position);
+	}
+	else {
+		setPosition(position);
+	}
+}
 tnl::Quaternion ike::Transform::getRotation() const {
 	return rotation_;
 }
@@ -114,9 +130,8 @@ void ike::Transform::followMove(const tnl::Vector3 value) {
 
 void ike::Transform::followScale(const tnl::Vector3 value) {
 	tnl::Vector3 s = { scale_.x * value.x, scale_.y * value.y , scale_.z * value.z };
-	tnl::Vector3 pp = getParent()->getPosition();
-	tnl::Vector3 lp = position_ - pp;
-	tnl::Vector3 lp2 = { lp.x * value.x, lp.y * value.y , lp.z * value.z };
-	ownMove(lp2 - lp);
+	tnl::Vector3 lp = getLocalPosition();
+	lp = { lp.x * value.x, lp.y * value.y , lp.z * value.z };
+	setLocalPosition(lp);
 	setScale(s);
 }

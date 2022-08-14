@@ -24,9 +24,9 @@ namespace ike {
 
 
 		tnl::Vector3 getPosition() const;
-		void setPosition(const tnl::Vector3 position);/*
+		void setPosition(const tnl::Vector3 position);
 		tnl::Vector3 getLocalPosition() const;
-		void setLocalPosition(const tnl::Vector3 position);*/
+		void setLocalPosition(const tnl::Vector3 position);
 		tnl::Quaternion getRotation() const;
 		void setRotation(const tnl::Quaternion rotation);/*
 		tnl::Quaternion getLocalRotation() const;
