@@ -13,10 +13,10 @@ namespace ike {
 
 		MeshTransform(dxe::Mesh* mesh);
 
-		void move(const tnl::Vector3 value);
+		void setPosition(const tnl::Vector3 position);
+
 		void eulerRotate(const tnl::Vector3 value);
 
-		void ownMove(const tnl::Vector3 value);
 		void ownEulerRotate(const tnl::Vector3 value);
 
 		
