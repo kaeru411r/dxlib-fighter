@@ -59,6 +59,9 @@ namespace ike {
 		tnl::Quaternion rotation_;
 		tnl::Vector3 position_;
 		tnl::Vector3 scale_ = {1, 1, 1};
+		tnl::Quaternion lcoalRotation_;
+		tnl::Vector3 localPosition_;
+		tnl::Vector3 localScale_ = { 1, 1, 1 };
 
 		void followRotate(const tnl::Vector3 value);
 		void followMove(const tnl::Vector3 value);

@@ -59,6 +59,14 @@ void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
 
 
 bool ike::Transform::setParent(Transform* data) {
+	tnl::Vector3 pos;
+	if (getParent() != nullptr) {
+		pos = -data->position_;
+	}
+	else {
+		pos = getParent()->position_ - data->position_;
+	}
+	localPosition_ += pos;
 	return ike::Tree::setParent(data);
 }
 
