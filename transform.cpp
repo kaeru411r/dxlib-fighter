@@ -33,6 +33,19 @@ void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 		setPosition(position);
 	}
 }
+tnl::Vector3 ike::Transform::getWorldPosition() const {
+	if (getParent() != nullptr) {
+		return localPosition_ - getParent()->getWorldPosition();
+	}
+	else {
+		return localPosition_;
+	}
+}
+void ike::Transform::setWorldPosition(const tnl::Vector3 position) {
+	tnl::Vector3 pWPos = getParent() != nullptr ? getParent()->getWorldPosition() : tnl::Vector3();
+	localPosition_ = position - pWPos;
+}
+
 tnl::Quaternion ike::Transform::getRotation() const {
 	return rotation_;
 }
@@ -59,14 +72,14 @@ void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
 
 
 bool ike::Transform::setParent(Transform* data) {
-	tnl::Vector3 pos;
+	tnl::Vector3 pos = -data->getWorldPosition();
+	//tnl::Vector3 rot = -data->localRotation_.getEuler();
 	if (getParent() != nullptr) {
-		pos = -data->position_;
-	}
-	else {
-		pos = getParent()->position_ - data->position_;
+		pos += getParent()->getWorldPosition();
+		//rot += getParent()->localRotation_.getEuler();
 	}
 	localPosition_ += pos;
+	//localRotation_ *= 
 	return ike::Tree::setParent(data);
 }
 
