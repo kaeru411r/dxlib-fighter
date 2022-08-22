@@ -35,8 +35,8 @@ namespace ike {
 
 		tnl::Vector3 getScale() const;
 		virtual void setScale(const tnl::Vector3 scale);
-		//tnl::Vector3 getLocalScale() const;
-		//virtual void setLocalScale(const tnl::Vector3 scale);
+		tnl::Vector3 getLocalScale() const;
+		virtual void setLocalScale(const tnl::Vector3 scale);
 		//tnl::Vector3 getWorldScale() const;
 		//virtual void setWorldScale(const tnl::Vector3 scale);
 

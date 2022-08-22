@@ -69,9 +69,12 @@ tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 }
 
 tnl::Vector3 ike::Transform::getScale() const {
-	return scale_;
+	if (getParent() != nullptr) {
+		tnl::Vector3 parentScale = getParent()->getScale();
+		return { parentScale.x * localScale_.x, parentScale.y * localScale_.y , parentScale.z * localScale_.z };
+	}
 }
-void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
+void ike::Transform::setScale(const tnl::Vector3 scale) {
 	tnl::Vector3 f = { scale.x / scale_.x, scale.y / scale_.y , scale.z / scale_.z };
 	scale_ = scale;
 	for (ike::Transform* t : getChildren()) {
@@ -79,6 +82,9 @@ void ike::Transform::Transform::setScale(const tnl::Vector3 scale) {
 	}
 }
 
+tnl::Vector3 ike::Transform::getLocalScale() const {
+	return localScale_;
+}
 
 
 bool ike::Transform::setParent(Transform* data) {
