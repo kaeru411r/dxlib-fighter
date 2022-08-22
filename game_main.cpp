@@ -77,10 +77,10 @@ void gameMain(float delta_time) {
 	ob2_->transform;
 
 	clsDx();
-	ob_->transform->ownEulerRotate(vec /180 * 3.151892);
-	printfDx("%f, %f, %f, %f\n", ob_->transform->getRotation().x, ob_->transform->getRotation().y, ob_->transform->getRotation().z, ob_->transform->getRotation().w);
-	printfDx("%f, %f, %f, %f\n", ob2_->transform->getRotation().x, ob2_->transform->getRotation().y, ob2_->transform->getRotation().z, ob2_->transform->getRotation().w);
-	printfDx("%f, %f, %f, %f\n", ob3_->transform->getRotation().x, ob3_->transform->getRotation().y, ob3_->transform->getRotation().z, ob3_->transform->getRotation().w);
+	ob3_->transform->ownEulerRotate(vec /180 * 3.151892);
+	printfDx("%f, %f, %f\n", ob_->transform->getEulerAngle().x, ob_->transform->getEulerAngle().y, ob_->transform->getEulerAngle().z);
+	printfDx("%f, %f, %f\n", ob2_->transform->getEulerAngle().x, ob2_->transform->getEulerAngle().y, ob2_->transform->getEulerAngle().z);
+	printfDx("%f, %f, %f\n", ob3_->transform->getEulerAngle().x, ob3_->transform->getEulerAngle().y, ob3_->transform->getEulerAngle().z);
 
 	camera->update();
 
