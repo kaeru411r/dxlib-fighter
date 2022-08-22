@@ -24,8 +24,8 @@ namespace ike {
 
 		tnl::Quaternion getRotation() const;
 		void setRotation(const tnl::Quaternion rotation);
-		//tnl::Quaternion getLocalRotation() const;
-		//void setLocalRotation(const tnl::Quaternion rotation);
+		tnl::Quaternion getLocalRotation() const;
+		void setLocalRotation(const tnl::Quaternion rotation);
 		tnl::Quaternion getWorldRotation() const;
 		void setWorldRotation(const tnl::Quaternion rotation);
 
@@ -66,6 +66,7 @@ namespace ike {
 		tnl::Quaternion rotation_;
 		tnl::Vector3 position_;
 		tnl::Vector3 scale_ = {1, 1, 1};
+
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_;
 		tnl::Vector3 localScale_ = { 1, 1, 1 };
