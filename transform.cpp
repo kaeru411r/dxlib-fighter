@@ -9,10 +9,12 @@ ike::Transform::~Transform() {
 
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
-		return getParent()->getPosition() + localPosition_;
+		tnl::Vector3 parentScale = getParent()->getScale();
+		tnl::Vector3 pos = { getLocalPosition().x * parentScale.x, getLocalPosition().y * parentScale.y, getLocalPosition().z * parentScale.z };
+		return getParent()->getPosition() + pos;
 	}
 	else {
-		return localPosition_;
+		return getLocalPosition();
 	}
 }
 void ike::Transform::setPosition(const tnl::Vector3 position) {
@@ -23,12 +25,7 @@ void ike::Transform::setPosition(const tnl::Vector3 position) {
 	position_ = position;
 }
 tnl::Vector3 ike::Transform::getLocalPosition() const {
-	if (getParent() != nullptr) {
-		return position_ - getParent()->position_;
-	}
-	else {
-		return position_;
-	}
+	return localPosition_;
 }
 void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 	if (getParent() != nullptr) {
@@ -71,7 +68,7 @@ tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 tnl::Vector3 ike::Transform::getScale() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
-		return { parentScale.x * localScale_.x, parentScale.y * localScale_.y , parentScale.z * localScale_.z };
+		return { parentScale.x * getLocalScale().x, parentScale.y * getLocalScale().y , parentScale.z * getLocalScale().z };
 	}
 }
 void ike::Transform::setScale(const tnl::Vector3 scale) {
