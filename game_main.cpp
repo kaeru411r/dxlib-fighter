@@ -50,6 +50,7 @@ void gameMain(float delta_time) {
 
 		init = true;
 	}
+
 	tnl::Vector3 vec = { 0,0,0 };
 	//ƒ[ƒ‹
 	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
@@ -81,6 +82,10 @@ void gameMain(float delta_time) {
 	printfDx("%f, %f, %f\n", ob_->transform->getEulerAngle().x, ob_->transform->getEulerAngle().y, ob_->transform->getEulerAngle().z);
 	printfDx("%f, %f, %f\n", ob2_->transform->getEulerAngle().x, ob2_->transform->getEulerAngle().y, ob2_->transform->getEulerAngle().z);
 	printfDx("%f, %f, %f\n", ob3_->transform->getEulerAngle().x, ob3_->transform->getEulerAngle().y, ob3_->transform->getEulerAngle().z);
+	ob_->transform->getPosition();
+	ob_->transform->getRotation();
+	ob_->transform->getEulerAngle();
+	ob_->transform->getScale();
 
 	camera->update();
 

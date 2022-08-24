@@ -1,9 +1,8 @@
 #pragma once
 #include "transform.h"
-#include "game_main.h"
 #include "../dxlib_ext/dxlib_ext.h"
 
-
+class Transfrom;
 namespace ike {
 
 

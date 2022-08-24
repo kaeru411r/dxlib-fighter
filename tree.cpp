@@ -1,4 +1,5 @@
 #include "tree.h"
+#include "../dxlib_ext/dxlib_ext.h"
 
 
 ike::Tree::Tree() {

@@ -1,8 +1,5 @@
 #pragma once
-#include <time.h>
-#include <algorithm>
-#include "game_main.h"
-#include "../dxlib_ext/dxlib_ext.h"
+#include<list>
 
 namespace ike {
 
@@ -15,7 +12,7 @@ namespace ike {
 
 	protected:
 		Tree();
-		~Tree();
+		virtual ~Tree();
 
 		bool setParent(Tree* data);
 
