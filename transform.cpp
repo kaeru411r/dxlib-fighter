@@ -7,6 +7,7 @@ ike::Transform::Transform() {
 ike::Transform::~Transform() {
 }
 
+
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
@@ -97,12 +98,12 @@ bool ike::Transform::setParent(Transform* data) {
 }
 
 ike::Transform* ike::Transform::getParent() const {
-	return static_cast<Transform*>(ike::Tree::getParent());
+	return dynamic_cast<Transform*>(ike::Tree::getParent());
 }
 std::list<ike::Transform*> ike::Transform::getChildren() const {
 	std::list<ike::Transform*> list;
 	for (ike::Tree* t : ike::Tree::getChildren()) {
-		list.push_back(static_cast<ike::Transform*>(t));
+		list.push_back(dynamic_cast<ike::Transform*>(t));
 	}
 	return list;
 }
