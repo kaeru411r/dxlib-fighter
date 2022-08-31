@@ -8,6 +8,10 @@ ike::Transform::~Transform() {
 }
 
 
+
+//-----------ポジション関連-----------------------
+
+
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
@@ -29,13 +33,15 @@ tnl::Vector3 ike::Transform::getLocalPosition() const {
 	return localPosition_;
 }
 void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
-	if (getParent() != nullptr) {
-		setPosition(getParent()->position_ + position);
-	}
-	else {
-		setPosition(position);
-	}
+	localPosition_ = position;
+	void setLocalRotation(const tnl::Quaternion rotation);
 }
+
+
+
+
+//-------------姿勢関連-------------------------------------
+
 
 tnl::Quaternion ike::Transform::getRotation() const {
 	return tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(getEulerAngle()), getEulerAngle().length());
@@ -51,7 +57,10 @@ void ike::Transform::setRotation(const tnl::Quaternion rotation) {
 }
 
 tnl::Quaternion ike::Transform::getLocalRotation() const {
-	return rotation_;
+	return localRotation_;
+}
+void ike::Transform::setLocalRotation(const tnl::Quaternion rotation) {
+	localRotation_ = rotation;
 }
 
 tnl::Vector3 ike::Transform::getEulerAngle() const {
@@ -65,6 +74,18 @@ tnl::Vector3 ike::Transform::getEulerAngle() const {
 tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 	return getLocalRotation().getEuler();
 }
+
+
+
+void ike::Transform::setLoaclEulerAngle(const tnl::Vector3 angle) {
+	setLocalRotation(tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(angle), angle.length()));
+}
+
+
+
+
+//--------------------スケール関連--------------------------------------
+
 
 tnl::Vector3 ike::Transform::getScale() const {
 	if (getParent() != nullptr) {
@@ -83,6 +104,14 @@ void ike::Transform::setScale(const tnl::Vector3 scale) {
 tnl::Vector3 ike::Transform::getLocalScale() const {
 	return localScale_;
 }
+void ike::Transform::setLocalScale(const tnl::Vector3 scale) {
+	localScale_ = scale;
+}
+
+
+
+
+//------------------親子関連--------------------------------------------
 
 
 bool ike::Transform::setParent(Transform* data) {
@@ -115,6 +144,12 @@ bool ike::Transform::allChildrenContains(const Transform* data) {
 	return ike::Tree::allChildrenContains(data);
 }
 
+
+
+
+//------------------オブジェクトの軸-----------------------------
+
+
 tnl::Vector3 ike::Transform::up() const {
 	return tnl::Vector3::TransformCoord(tnl::Vector3::up, rotation_);
 }
@@ -126,12 +161,16 @@ tnl::Vector3 ike::Transform::front() const {
 }
 
 
-void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
+
+
+//-------------------移動関数---------------------------------------
+
+
+void ike::Transform::move(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), rotation_);
-	eulerRotate(axis * value.length());
+	setPosition(position_ + value);
 }
 
 void ike::Transform::ownMove(const tnl::Vector3 value) {
@@ -142,26 +181,35 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 	move(axis);
 }
 
+
+
+//------------------回転関数-------------------------------
+
+
 void ike::Transform::eulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
 	setRotation(rotation_ * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length()));
 }
-
-void ike::Transform::move(const tnl::Vector3 value) {
+void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	setPosition(position_ + value);
+	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), rotation_);
+	eulerRotate(axis * value.length());
 }
 
+
+
+
+//--------------------親オブジェクトへの追従関数--------------------------------
 void ike::Transform::followRotate(const tnl::Vector3 value) {
 
 }
 
-void ike::Transform::followMove(const tnl::Vector3 value) {
-	move(value);
+void ike::Transform::followPosition() {
+
 }
 
 void ike::Transform::followScale(const tnl::Vector3 value) {

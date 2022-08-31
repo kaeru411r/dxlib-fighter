@@ -14,27 +14,22 @@ namespace ike {
 		virtual void setPosition(const tnl::Vector3 position);
 		tnl::Vector3 getLocalPosition() const;
 		virtual void setLocalPosition(const tnl::Vector3 position);
-		//tnl::Vector3 getWorldPosition() const;
-		//virtual void setWorldPosition(const tnl::Vector3 position);
 
 
 		tnl::Quaternion getRotation() const;
 		void setRotation(const tnl::Quaternion rotation);
 		tnl::Quaternion getLocalRotation() const;
-		//void setLocalRotation(const tnl::Quaternion rotation);
-		//tnl::Quaternion getWorldRotation() const;
-		//void setWorldRotation(const tnl::Quaternion rotation);
+		virtual void setLocalRotation(const tnl::Quaternion rotation);
 
 		tnl::Vector3 getEulerAngle() const;
 		tnl::Vector3 getLocalEulerAngle() const;
+		void setLoaclEulerAngle(const tnl::Vector3 angle);
 
 
 		tnl::Vector3 getScale() const;
 		virtual void setScale(const tnl::Vector3 scale);
 		tnl::Vector3 getLocalScale() const;
-		//virtual void setLocalScale(const tnl::Vector3 scale);
-		//tnl::Vector3 getWorldScale() const;
-		//virtual void setWorldScale(const tnl::Vector3 scale);
+		virtual void setLocalScale(const tnl::Vector3 scale);
 
 
 		bool setParent(Transform* data);
@@ -71,7 +66,7 @@ namespace ike {
 		tnl::Vector3 localScale_ = { 1, 1, 1 };
 
 		void followRotate(const tnl::Vector3 value);
-		void followMove(const tnl::Vector3 value);
+		void followPosition();
 		void followScale(const tnl::Vector3 value);
 
 	};
