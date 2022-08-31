@@ -5,14 +5,15 @@
 #include "transform.h"
 #include "object .h"
 #include "tree.h"
+#include "renderObject.h"
 
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
 dxe::Mesh* mesh2 = nullptr;
 dxe::Mesh* mesh3 = nullptr;
-ike::Object* ob_ = nullptr;
-ike::Object* ob2_ = nullptr;
-ike::Object* ob3_ = nullptr;
+ike::RenderObject* ob_ = nullptr;
+ike::RenderObject* ob2_ = nullptr;
+ike::RenderObject* ob3_ = nullptr;
 
 bool init = false;
 void gameMain(float delta_time) {
@@ -22,31 +23,35 @@ void gameMain(float delta_time) {
 		mesh = dxe::Mesh::CreateBoxMV(50);
 		mesh->setTexture("graphics/box.bmp");
 		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		ob_ = new ike::Object(mesh);
+		ob_ = new ike::RenderObject(mesh);
 		mesh2 = dxe::Mesh::CreateBoxMV(50);
 		mesh2->setTexture("graphics/box.bmp");
 		mesh2->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		ob2_ = new ike::Object(mesh2);
-		ob2_->transform->move({ 5, 5, 5 });
+		ob2_ = new ike::RenderObject(mesh2);
+		ob2_->getTransform()->move({5, 5, 5});
 		mesh3 = dxe::Mesh::CreateBoxMV(50);
 		mesh3->setTexture("graphics/box.bmp");
 		mesh3->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
-		ob3_ = new ike::Object(mesh3);
-		ob3_->transform->move({ 10, 10, 10 });
-		ike::Transform* tr = ob_->transform;
+		ob3_ = new ike::RenderObject(mesh3);
+		ob3_->getTransform()->move({ 10, 10, 10 });
+		ike::Transform* tr = ob_->getTransform();
 		tr->ownMove({ 0,0,0 });
 		//ike::Tree* t = tr_;
-		ob2_->transform->setParent(ob_->transform);
-		ob3_->transform->setParent(ob2_->transform);
-		if (ob_->transform->allChildrenContains(ob3_->transform)) {
+		ob2_->getTransform()->setParent(ob_->getTransform());
+		ob3_->getTransform()->setParent(ob2_->getTransform());
+		if (ob_->getTransform()->allChildrenContains(ob3_->getTransform())) {
 			int a = 0;
 		}
-		ob_->transform->setParent(ob3_->transform);
-		if (ob_->transform->childrenContains(ob2_->transform)) {
+		ob_->getTransform()->setParent(ob3_->getTransform());
+		if (ob_->getTransform()->childrenContains(ob2_->getTransform())) {
 			int a = 0;
 		}
-		auto c = ob_->transform->getChildren();
-		ob_->transform->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
+		auto c = ob_->getTransform()->getChildren();
+		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
+		ob2_->getTransform()->setLocalPosition({ 30, 30, 30 });
+		ob_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
+		ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
+		//ob_->getTransform()->setLocalScale({ 2, 2, 2 });
 
 		init = true;
 	}
@@ -73,25 +78,24 @@ void gameMain(float delta_time) {
 	if (tnl::Input::IsKeyDown(eKeys::KB_E)) {
 		vec += tnl::Vector3::up * 2;
 	}
-	ob_->transform->ownMove(tnl::Vector3::front);
-	//ob_->transform->setScale(ob_->transform->getScale() * 1.01);
-	ob2_->transform;
+	ob_->getTransform()->ownMove(tnl::Vector3::front);
+	//ob_->getTransform()->setScale(ob_->getTransform()->getScale() * 1.01);
+	ob2_->getTransform();
 
 	clsDx();
-	ob3_->transform->ownEulerRotate(vec /180 * 3.151892);
-	printfDx("%f, %f, %f\n", ob_->transform->getEulerAngle().x, ob_->transform->getEulerAngle().y, ob_->transform->getEulerAngle().z);
-	printfDx("%f, %f, %f\n", ob2_->transform->getEulerAngle().x, ob2_->transform->getEulerAngle().y, ob2_->transform->getEulerAngle().z);
-	printfDx("%f, %f, %f\n", ob3_->transform->getEulerAngle().x, ob3_->transform->getEulerAngle().y, ob3_->transform->getEulerAngle().z);
-	ob_->transform->getPosition();
-	ob_->transform->getRotation();
-	ob_->transform->getEulerAngle();
-	ob_->transform->getScale();
+	//ob3_->getTransform()->ownEulerRotate(vec /180 * 3.151892);
+	printfDx("%f, %f, %f\n", ob_->getTransform()->getScale().x, ob_->getTransform()->getScale().y, ob_->getTransform()->getScale().z);
+	printfDx("%f, %f, %f\n", ob2_->getTransform()->getPosition().x, ob2_->getTransform()->getPosition().y, ob2_->getTransform()->getPosition().z);
+	ob_->getTransform()->getPosition();
+	//ob_->getTransform()->getRotation();
+	ob_->getTransform()->getEulerAngle();
+	ob_->getTransform()->getScale();
 
 	camera->update();
 
-	mesh3->render(camera);
-	mesh2->render(camera);
-	mesh->render(camera);
+	ob_->render(camera);
+	ob2_->render(camera);
+	ob3_->render(camera);
 
 	DrawGridGround(50, 20);
 }

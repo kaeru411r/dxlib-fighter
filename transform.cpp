@@ -92,6 +92,9 @@ tnl::Vector3 ike::Transform::getScale() const {
 		tnl::Vector3 parentScale = getParent()->getScale();
 		return { parentScale.x * getLocalScale().x, parentScale.y * getLocalScale().y , parentScale.z * getLocalScale().z };
 	}
+	else {
+		return getLocalScale();
+	}
 }
 void ike::Transform::setScale(const tnl::Vector3 scale) {
 	tnl::Vector3 f = { scale.x / scale_.x, scale.y / scale_.y , scale.z / scale_.z };

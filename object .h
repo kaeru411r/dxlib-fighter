@@ -3,7 +3,6 @@
 #include <algorithm>
 #include "game_main.h"
 #include "../dxlib_ext/dxlib_ext.h"
-#include "transform.h"
 #include "meshTransform.h"
 
 namespace ike {
@@ -11,10 +10,10 @@ namespace ike {
 
 	public:
 
-		Object(dxe::Mesh* mesh);
+		Object();
 		~Object();
-		ike::MeshTransform* transform;
 
+		virtual void update(const float deltaTime) = 0;
 
 	private:
 	};
