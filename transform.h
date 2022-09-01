@@ -43,7 +43,7 @@ namespace ike {
 
 
 		tnl::Vector3 up() const;
-		tnl::Vector3 left() const;
+		tnl::Vector3 right() const;
 		tnl::Vector3 front() const;
 
 		virtual void ownEulerRotate(const tnl::Vector3 value);

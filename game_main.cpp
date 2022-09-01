@@ -48,7 +48,7 @@ void gameMain(float delta_time) {
 		}
 		auto c = ob_->getTransform()->getChildren();
 		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
-		ob2_->getTransform()->setLocalPosition({ 30, 30, 30 });
+		ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
 		ob_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
 		ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
 		//ob_->getTransform()->setLocalScale({ 2, 2, 2 });

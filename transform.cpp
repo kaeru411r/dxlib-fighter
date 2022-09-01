@@ -15,7 +15,10 @@ ike::Transform::~Transform() {
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
-		tnl::Vector3 pos = { getLocalPosition().x * parentScale.x, getLocalPosition().y * parentScale.y, getLocalPosition().z * parentScale.z };
+		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x * parentScale.x);
+		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y * parentScale.y);
+		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z * parentScale.z);
+		tnl::Vector3 pos = right + up + front;
 		return getParent()->getPosition() + pos;
 	}
 	else {
@@ -44,7 +47,12 @@ void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 
 
 tnl::Quaternion ike::Transform::getRotation() const {
-	return tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(getEulerAngle()), getEulerAngle().length());
+	if (getParent() != nullptr) {
+		tnl::Quaternion::Subtract(getParent()->getRotation(), getLocalRotation());
+	}
+	else {
+		return getLocalRotation();
+	}
 }
 void ike::Transform::setRotation(const tnl::Quaternion rotation) {
 	tnl::Vector3 delta = rotation.getEuler() - rotation_.getEuler();
@@ -154,13 +162,13 @@ bool ike::Transform::allChildrenContains(const Transform* data) {
 
 
 tnl::Vector3 ike::Transform::up() const {
-	return tnl::Vector3::TransformCoord(tnl::Vector3::up, rotation_);
+	return tnl::Vector3::TransformCoord(tnl::Vector3::up, getRotation());
 }
-tnl::Vector3 ike::Transform::left() const {
-	return tnl::Vector3::TransformCoord(tnl::Vector3::left, rotation_);
+tnl::Vector3 ike::Transform::right() const {
+	return tnl::Vector3::TransformCoord(-tnl::Vector3::left, getRotation());
 }
 tnl::Vector3 ike::Transform::front() const {
-	return tnl::Vector3::TransformCoord(tnl::Vector3::front, rotation_);
+	return tnl::Vector3::TransformCoord(tnl::Vector3::front, getRotation());
 }
 
 
