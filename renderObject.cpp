@@ -9,9 +9,6 @@ ike::RenderObject::~RenderObject() {
 	delete(transform_);
 }
 
-void ike::RenderObject::update(float deltaTime) {
-
-}
 
 ike::Transform* ike::RenderObject::getTransform() const {
 	return transform_;

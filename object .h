@@ -13,7 +13,7 @@ namespace ike {
 		Object();
 		~Object();
 
-		virtual void update(const float deltaTime) = 0;
+		virtual void update(const float deltaTime) {}
 
 	private:
 	};

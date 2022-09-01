@@ -11,7 +11,7 @@ namespace ike {
 
 		Transform* getTransform() const;
 
-		void update(float deltaTime);
+		virtual void update(float deltaTime) {}
 
 		void render(const dxe::Camera* camera);
 
