@@ -12,17 +12,8 @@ namespace ike {
 
 		MeshTransform(dxe::Mesh* mesh);
 
-		void setPosition(const tnl::Vector3 position);
-
-		void setLocalPosition(const tnl::Vector3 position);
-		void setLocalRotation(const tnl::Quaternion rotation);
-		void setLocalScale(const tnl::Vector3 scale);
 
 		void render(const dxe::Camera* camera);
-
-		void eulerRotate(const tnl::Vector3 value);
-
-		void ownEulerRotate(const tnl::Vector3 value);
 
 		
 
