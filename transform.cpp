@@ -3,6 +3,7 @@
 //using namespace ike;
 
 ike::Transform::Transform() {
+	localPosition_ = { 0, 0, 0 };
 }
 ike::Transform::~Transform() {
 }
@@ -15,9 +16,9 @@ ike::Transform::~Transform() {
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
-		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x * parentScale.x);
-		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y * parentScale.y);
-		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z * parentScale.z);
+		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x / parentScale.x);
+		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y / parentScale.y);
+		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z / parentScale.z);
 		tnl::Vector3 pos = right + up + front;
 		return getParent()->getPosition() + pos;
 	}
@@ -26,11 +27,17 @@ tnl::Vector3 ike::Transform::getPosition() const {
 	}
 }
 void ike::Transform::setPosition(const tnl::Vector3 position) {
-	tnl::Vector3 delta = position - position_;
-	for (ike::Transform* tr : getChildren()) {
-		tr->setPosition(tr->position_ + delta);
+	if (getParent() != nullptr) {
+		tnl::Vector3 pos = position - getParent()->getPosition();
+		tnl::Vector3 parentScale = getParent()->getScale();
+		float right = getParent()->right().x * (pos.x * parentScale.x);
+		float up = getParent()->up().y * (pos.y * parentScale.y);
+		float front = getParent()->front().z * (pos.z * parentScale.z);
+		setLocalPosition({right, up, front});
 	}
-	position_ = position;
+	else {
+		setLocalPosition(position);
+	}
 }
 tnl::Vector3 ike::Transform::getLocalPosition() const {
 	return localPosition_;

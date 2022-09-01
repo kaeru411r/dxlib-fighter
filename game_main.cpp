@@ -28,14 +28,10 @@ void gameMain(float delta_time) {
 		mesh2->setTexture("graphics/box.bmp");
 		mesh2->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
 		ob2_ = new ike::RenderObject(mesh2);
-		ob2_->getTransform()->move({5, 5, 5});
 		mesh3 = dxe::Mesh::CreateBoxMV(50);
 		mesh3->setTexture("graphics/box.bmp");
 		mesh3->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
 		ob3_ = new ike::RenderObject(mesh3);
-		ob3_->getTransform()->move({ 10, 10, 10 });
-		ike::Transform* tr = ob_->getTransform();
-		tr->ownMove({ 0,0,0 });
 		//ike::Tree* t = tr_;
 		ob2_->getTransform()->setParent(ob_->getTransform());
 		ob3_->getTransform()->setParent(ob2_->getTransform());
@@ -48,10 +44,11 @@ void gameMain(float delta_time) {
 		}
 		auto c = ob_->getTransform()->getChildren();
 		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
-		ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
+		//ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
 		ob_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
 		ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
-		//ob_->getTransform()->setLocalScale({ 2, 2, 2 });
+		ob_->getTransform()->setLocalScale({ 2, 2, 2 });
+		ob2_->getTransform()->setPosition({ 100, 0, 0 });
 
 		init = true;
 	}
