@@ -35,23 +35,20 @@ void gameMain(float delta_time) {
 		//ike::Tree* t = tr_;
 		ob2_->getTransform()->setParent(ob_->getTransform());
 		ob3_->getTransform()->setParent(ob2_->getTransform());
-		if (ob_->getTransform()->allChildrenContains(ob3_->getTransform())) {
-			int a = 0;
-		}
 		ob_->getTransform()->setParent(ob3_->getTransform());
-		if (ob_->getTransform()->childrenContains(ob2_->getTransform())) {
-			int a = 0;
-		}
-		auto c = ob_->getTransform()->getChildren();
+		ob2_->getTransform()->setPosition({ -50, 0, 0 });
+		ob3_->getTransform()->setLocalPosition({ -50, 0, 0 });
 		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
 		//ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
 		ob_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
-		ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
-		ob_->getTransform()->setLocalScale({ 2, 2, 2 });
-		ob2_->getTransform()->setPosition({ 100, 0, 0 });
+		ob2_->getTransform()->setLoaclEulerAngle({ -3.141592 / 2, 3.141592, 3.141592 / 2 });
+		//ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
+		ob_->getTransform()->setLocalScale({ 2, 2, 2});
 
 		init = true;
 	}
+
+	ob_->getTransform()->move({ 0, 0, 1 });
 
 	tnl::Vector3 vec = { 0,0,0 };
 	//ƒ[ƒ‹

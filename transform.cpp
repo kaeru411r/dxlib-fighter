@@ -4,6 +4,8 @@
 
 ike::Transform::Transform() {
 	localPosition_ = { 0, 0, 0 };
+	localRotation_ = tnl::Quaternion();
+	localScale_ = { 1, 1, 1 };
 }
 ike::Transform::~Transform() {
 }
@@ -16,9 +18,9 @@ ike::Transform::~Transform() {
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
-		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x / parentScale.x);
-		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y / parentScale.y);
-		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z / parentScale.z);
+		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x * parentScale.x);
+		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y * parentScale.y);
+		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z * parentScale.z);
 		tnl::Vector3 pos = right + up + front;
 		return getParent()->getPosition() + pos;
 	}
@@ -44,7 +46,6 @@ tnl::Vector3 ike::Transform::getLocalPosition() const {
 }
 void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 	localPosition_ = position;
-	void setLocalRotation(const tnl::Quaternion rotation);
 }
 
 
@@ -55,20 +56,19 @@ void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 
 tnl::Quaternion ike::Transform::getRotation() const {
 	if (getParent() != nullptr) {
-		tnl::Quaternion::Subtract(getParent()->getRotation(), getLocalRotation());
+		return tnl::Quaternion::Subtract(getLocalRotation(), getParent()->getRotation());
 	}
 	else {
 		return getLocalRotation();
 	}
 }
 void ike::Transform::setRotation(const tnl::Quaternion rotation) {
-	tnl::Vector3 delta = rotation.getEuler() - rotation_.getEuler();
-	printfDx("%f, %f, %f\n", delta.x, delta.y, delta.z);
-
-	for (ike::Transform* tr : getChildren()) {
-		tr->eulerRotate(delta);
+	if (getParent() != nullptr) {
+		setLocalRotation(tnl::Quaternion::Subtract(getParent()->getRotation(), rotation));
 	}
-	rotation_ = rotation;
+	else {
+		setLocalRotation(rotation);
+	}
 }
 
 tnl::Quaternion ike::Transform::getLocalRotation() const {
@@ -93,7 +93,10 @@ tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 
 
 void ike::Transform::setLoaclEulerAngle(const tnl::Vector3 angle) {
-	setLocalRotation(tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(angle), angle.length()));
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, angle.x);
+	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, angle.y);
+	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, angle.z);
+	setLocalRotation(rot);
 }
 
 
@@ -188,7 +191,7 @@ void ike::Transform::move(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	setPosition(position_ + value);
+	setPosition(getPosition() + value);
 }
 
 void ike::Transform::ownMove(const tnl::Vector3 value) {
