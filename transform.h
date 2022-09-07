@@ -27,7 +27,6 @@ namespace ike {
 
 
 		tnl::Vector3 getScale() const;
-		void setScale(const tnl::Vector3 scale);
 		tnl::Vector3 getLocalScale() const;
 		void setLocalScale(const tnl::Vector3 scale);
 
@@ -57,17 +56,10 @@ namespace ike {
 
 	private:
 
-		tnl::Quaternion rotation_;
-		tnl::Vector3 position_;
-		tnl::Vector3 scale_ = {1, 1, 1};
 
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_ = { 0, 0, 0 };
 		tnl::Vector3 localScale_ = { 1, 1, 1 };
-
-		void followRotate(const tnl::Vector3 value);
-		void followPosition();
-		void followScale(const tnl::Vector3 value);
 
 	};
 }

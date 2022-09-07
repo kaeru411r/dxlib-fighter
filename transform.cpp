@@ -114,13 +114,6 @@ tnl::Vector3 ike::Transform::getScale() const {
 		return getLocalScale();
 	}
 }
-void ike::Transform::setScale(const tnl::Vector3 scale) {
-	tnl::Vector3 f = { scale.x / scale_.x, scale.y / scale_.y , scale.z / scale_.z };
-	scale_ = scale;
-	for (ike::Transform* t : getChildren()) {
-		t->followScale(f);
-	}
-}
 
 tnl::Vector3 ike::Transform::getLocalScale() const {
 	return localScale_;
@@ -198,7 +191,7 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, rotation_);
+	tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, getRotation());
 	move(axis);
 }
 
@@ -211,32 +204,12 @@ void ike::Transform::eulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	setRotation(rotation_ * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length()));
+	setRotation(getRotation() * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length()));
 }
 void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), rotation_);
+	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), getRotation());
 	eulerRotate(axis * value.length());
-}
-
-
-
-
-//--------------------親オブジェクトへの追従関数--------------------------------
-void ike::Transform::followRotate(const tnl::Vector3 value) {
-
-}
-
-void ike::Transform::followPosition() {
-
-}
-
-void ike::Transform::followScale(const tnl::Vector3 value) {
-	tnl::Vector3 s = { scale_.x * value.x, scale_.y * value.y , scale_.z * value.z };
-	tnl::Vector3 lp = getLocalPosition();
-	lp = { lp.x * value.x, lp.y * value.y , lp.z * value.z };
-	setLocalPosition(lp);
-	setScale(s);
 }
