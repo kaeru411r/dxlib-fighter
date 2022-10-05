@@ -14,7 +14,8 @@ ike::Transform::~Transform() {
 
 //-----------ポジション関連-----------------------
 
-
+		/// <summary>現在のPositionを返す</summary>
+		/// <returns></returns>
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
@@ -133,16 +134,16 @@ void ike::Transform::setLocalScale(const tnl::Vector3 scale) {
 //------------------親子関連--------------------------------------------
 
 
-bool ike::Transform::setParent(Transform* data) {
-	tnl::Vector3 pos = -data->getPosition();
-	//tnl::Vector3 rot = -data->localRotation_.getEuler();
+bool ike::Transform::setParent(Transform* parent) {
+	tnl::Vector3 pos = -parent->getPosition();
+	//tnl::Vector3 rot = -parent->localRotation_.getEuler();
 	if (getParent() != nullptr) {
 		pos += getParent()->getPosition();
 		//rot += getParent()->localRotation_.getEuler();
 	}
 	localPosition_ += pos;
 	//localRotation_ *= 
-	return ike::Tree::setParent(data);
+	return ike::Tree::setParent(parent);
 }
 
 ike::Transform* ike::Transform::getParent() const {
