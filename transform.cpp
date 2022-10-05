@@ -86,12 +86,17 @@ tnl::Vector3 ike::Transform::getEulerAngle() const {
 		return getLocalEulerAngle();
 	}
 }
-tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
-	return getLocalRotation().getEuler();
+void ike::Transform::setEulerAngle(const tnl::Vector3 angle) {
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, angle.x);
+	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, angle.y);
+	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, angle.z);
+	setRotation(rot);
 }
 
 
-
+tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
+	return getLocalRotation().getEuler();
+}
 void ike::Transform::setLoaclEulerAngle(const tnl::Vector3 angle) {
 	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, angle.x);
 	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, angle.y);
@@ -184,6 +189,9 @@ void ike::Transform::move(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
+	clsDx();
+	printfDx("%f, %f, %f\n", getPosition().x, getPosition().y, getPosition().z);
+	printfDx("%f, %f, %f\n", value.x, value.y, value.z);
 	setPosition(getPosition() + value);
 }
 
@@ -204,7 +212,8 @@ void ike::Transform::eulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	setRotation(getRotation() * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length()));
+	setEulerAngle(getEulerAngle() + value);
+	//setRotation(getRotation() * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length()));
 }
 void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {

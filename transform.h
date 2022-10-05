@@ -23,6 +23,7 @@ namespace ike {
 
 		tnl::Vector3 getEulerAngle() const;
 		tnl::Vector3 getLocalEulerAngle() const;
+		void setEulerAngle(const tnl::Vector3 angle);
 		void setLoaclEulerAngle(const tnl::Vector3 angle);
 
 
@@ -58,8 +59,8 @@ namespace ike {
 
 
 		tnl::Quaternion localRotation_;
-		tnl::Vector3 localPosition_ = { 0, 0, 0 };
-		tnl::Vector3 localScale_ = { 1, 1, 1 };
+		tnl::Vector3 localPosition_;
+		tnl::Vector3 localScale_;
 
 	};
 }
