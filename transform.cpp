@@ -120,6 +120,15 @@ tnl::Vector3 ike::Transform::getScale() const {
 		return getLocalScale();
 	}
 }
+void ike::Transform::setScale(const tnl::Vector3 scale) {
+	if (getParent() != nullptr) {
+		tnl::Vector3 parentScale = getParent()->getScale();
+		setLocalScale({ scale.x / parentScale.y, scale.y / parentScale.x, scale.z / parentScale.z });
+	}
+	else {
+		setLocalScale(scale);
+	}
+}
 
 tnl::Vector3 ike::Transform::getLocalScale() const {
 	return localScale_;
