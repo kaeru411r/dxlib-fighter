@@ -43,8 +43,14 @@ void gameMain(float delta_time) {
 		//ob_->getTransform()->setLoaclEulerAngle({ tnl::PI / 2, 0, 0 });
 		//ob2_->getTransform()->setLoaclEulerAngle({ -3.141592 / 2, 3.141592, 3.141592 / 2 });
 		//ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
-		ob_->getTransform()->eulerRotate({ 0, tnl::ToRadian(45), 0 });
-		ob_->getTransform()->ownEulerRotate({ 0, 0, tnl::ToRadian(-45) });
+		//ob_->getTransform()->eulerRotate({ 0, tnl::ToRadian(45), 0 });
+		ob_->getTransform()->setEulerAngle({ 0, -90, 0 });
+		//ob_->getTransform()->eulerRotate({ 0, 90, 00 });
+		ob_->getTransform()->eulerRotate({ 0, 0, 45 });
+		//ob_->getTransform()->ownEulerRotate({ 0, 0, 100 });
+		//ob_->getTransform()->ownEulerRotate({ 0, 0, 10 });
+		//ob_->getTransform()->setEulerAngle({ 0, 45, -45 });
+		printfDx("%f\n", ob_->getTransform()->getEulerAngle().z);
 		ob_->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2_->getTransform()->setScale({ 1, 1, 1 });
 
@@ -52,6 +58,7 @@ void gameMain(float delta_time) {
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
 	}
 
+	//clsDx();
 	//ob_->getTransform()->move({ 0, 0, 1 });
 
 	tnl::Vector3 vec = { 0,0,0 };
@@ -80,9 +87,8 @@ void gameMain(float delta_time) {
 	//ob_->getTransform()->setScale(ob_->getTransform()->getScale() * 1.01);
 	//ob2_->getTransform()->eulerRotate({ 0.000001, 0, 0 });
 
-	clsDx();
 	ob_->getTransform()->eulerRotate(vec);
-	printfDx("%f, %f, %f", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
+	//printfDx("%f, %f, %f", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
 	//printfDx("%f, %f, %f\n", ob_->getTransform()->getScale().x, ob_->getTransform()->getScale().y, ob_->getTransform()->getScale().z);
 	//printfDx("%f, %f, %f\n", ob2_->getTransform()->getPosition().x, ob2_->getTransform()->getPosition().y, ob2_->getTransform()->getPosition().z);
 	ob_->getTransform()->getPosition();

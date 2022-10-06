@@ -90,24 +90,23 @@ tnl::Vector3 ike::Transform::getEulerAngle() const {
 	}
 }
 void ike::Transform::setEulerAngle(const tnl::Vector3 angle) {
-	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, angle.x);
-	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, angle.y);
-	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, angle.z);
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(angle.x));
+	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, tnl::ToRadian(angle.y));
+	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, tnl::ToRadian(angle.z));
 	setRotation(rot);
 }
 
 
 tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 	tnl::Vector3 angle = getLocalRotation().getEuler();
-	printfDx("%f\n", angle.length());
 	angle = {tnl::ToDegree(angle.x), tnl::ToDegree(angle.y), tnl::ToDegree(angle.z)};
 	angle = { abs(angle.x), abs(angle.y), abs(angle.z) };
 	return angle;
 }
 void ike::Transform::setLoaclEulerAngle(const tnl::Vector3 angle) {
-	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, angle.x);
-	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, angle.y);
-	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, angle.z);
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(angle.x));
+	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, tnl::ToRadian(angle.y));
+	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, tnl::ToRadian(angle.z));
 	setLocalRotation(rot);
 }
 
@@ -215,7 +214,8 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, getRotation());
+	//tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, getRotation());
+	tnl::Vector3 axis = getEulerAngle() + value;
 	move(axis);
 }
 
@@ -235,6 +235,9 @@ void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), getRotation());
-	eulerRotate(axis * value.length());
+	//tnl::Vector3 axis = { tnl::ToRadian(value.x), tnl::ToRadian(value.y), tnl::ToRadian(value.z) };
+	tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), getRotation())/* * value.length()*/;
+	//tnl::Vector3 axis = getEulerAngle() + value;
+	axis = { axis.x * value.x, axis.y * value.y , axis.z * value.z };
+	eulerRotate(axis /** tnl::ToRadian(value.length())*/);
 }
