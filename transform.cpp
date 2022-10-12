@@ -90,9 +90,9 @@ tnl::Vector3 ike::Transform::getEulerAngle() const {
 	}
 }
 void ike::Transform::setEulerAngle(const tnl::Vector3 angle) {
-	tnl::Quaternion rot = tnl::Quaternion::RotationAxis(right(), tnl::ToRadian(angle.x));
-	rot *= tnl::Quaternion::RotationAxis(up(), tnl::ToRadian(angle.y));
-	rot *= tnl::Quaternion::RotationAxis(front(), tnl::ToRadian(angle.z));
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(angle.x));
+	rot *= tnl::Quaternion::RotationAxis({ 0, 1, 0 }, tnl::ToRadian(angle.y));
+	rot *= tnl::Quaternion::RotationAxis({ 0, 0, 1 }, tnl::ToRadian(angle.z));
 	setRotation(rot);
 }
 
@@ -104,9 +104,9 @@ tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 	return angle;
 }
 void ike::Transform::setLocalEulerAngle(const tnl::Vector3 angle) {
-	tnl::Quaternion rot = tnl::Quaternion::RotationAxis(tnl::Vector3::TransformCoord(tnl::Vector3::right, rot), tnl::ToRadian(angle.x));
-	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::TransformCoord(tnl::Vector3::up, rot), tnl::ToRadian(angle.y));
-	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::TransformCoord(tnl::Vector3::front, rot), tnl::ToRadian(angle.z));
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis(tnl::Vector3::right , tnl::ToRadian(angle.x));
+	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::up, tnl::ToRadian(angle.y));
+	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::front, tnl::ToRadian(angle.z));
 	setLocalRotation(rot);
 }
 

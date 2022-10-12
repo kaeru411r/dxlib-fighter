@@ -58,6 +58,7 @@ void gameMain(float delta_time) {
 		init = true;
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
 		vec_ = ob_->getTransform()->getLocalEulerAngle();
+		vec_ = ob_->getTransform()->getLocalEulerAngle();
 	}
 
 	clsDx();
