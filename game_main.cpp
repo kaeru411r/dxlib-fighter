@@ -14,6 +14,7 @@ dxe::Mesh* mesh3 = nullptr;
 ike::RenderObject* ob_ = nullptr;
 ike::RenderObject* ob2_ = nullptr;
 ike::RenderObject* ob3_ = nullptr;
+tnl::Vector3 vec_;
 
 bool init = false;
 void gameMain(float delta_time) {
@@ -40,55 +41,57 @@ void gameMain(float delta_time) {
 		ob3_->getTransform()->setLocalPosition({ -50, 0, 0 });
 		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
 		//ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
-		//ob_->getTransform()->setLoaclEulerAngle({ tnl::PI / 2, 0, 0 });
-		//ob2_->getTransform()->setLoaclEulerAngle({ -3.141592 / 2, 3.141592, 3.141592 / 2 });
-		//ob2_->getTransform()->setLoaclEulerAngle({ 0, 3.141592, 0 });
+		//ob_->getTransform()->setLocalEulerAngle({ tnl::PI / 2, 0, 0 });
+		//ob2_->getTransform()->setLocalEulerAngle({ -3.141592 / 2, 3.141592, 3.141592 / 2 });
+		//ob2_->getTransform()->setLocalEulerAngle({ 0, 3.141592, 0 });
 		//ob_->getTransform()->eulerRotate({ 0, tnl::ToRadian(45), 0 });
-		ob_->getTransform()->setEulerAngle({ 0, -90, 0 });
+		//ob_->getTransform()->setLocalEulerAngle({ 0, -90, 0 });
 		//ob_->getTransform()->eulerRotate({ 0, 90, 00 });
-		ob_->getTransform()->eulerRotate({ 0, 0, 45 });
+		//ob_->getTransform()->eulerRotate({ 0, 0, 45 });
 		//ob_->getTransform()->ownEulerRotate({ 0, 0, 100 });
 		//ob_->getTransform()->ownEulerRotate({ 0, 0, 10 });
 		//ob_->getTransform()->setEulerAngle({ 0, 45, -45 });
-		printfDx("%f\n", ob_->getTransform()->getEulerAngle().z);
+		//printfDx("%f\n", ob_->getTransform()->getEulerAngle().z);
 		ob_->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2_->getTransform()->setScale({ 1, 1, 1 });
 
 		init = true;
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
+		vec_ = ob_->getTransform()->getLocalEulerAngle();
 	}
 
-	//clsDx();
+	clsDx();
 	//ob_->getTransform()->move({ 0, 0, 1 });
 
-	tnl::Vector3 vec = { 0,0,0 };
+	
 	//ロール
 	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-		vec += tnl::Vector3::front * 2;
+		vec_ += tnl::Vector3::front * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-		vec += -tnl::Vector3::front * 2;
+		vec_ += -tnl::Vector3::front * 2;
 	}
 	//ピッチ
 	if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
-		vec += -tnl::Vector3::left * 2;
+		vec_ += -tnl::Vector3::left * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
-		vec += tnl::Vector3::left * 2;
+		vec_ += tnl::Vector3::left * 2;
 	}
 	//ヨー
 	if (tnl::Input::IsKeyDown(eKeys::KB_Q)) {
-		vec += -tnl::Vector3::up * 2;
+		vec_ += -tnl::Vector3::up * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_E)) {
-		vec += tnl::Vector3::up * 2;
+		vec_ += tnl::Vector3::up * 2;
 	}
 	//ob_->getTransform()->ownMove(tnl::Vector3::front);
 	//ob_->getTransform()->setScale(ob_->getTransform()->getScale() * 1.01);
 	//ob2_->getTransform()->eulerRotate({ 0.000001, 0, 0 });
 
-	ob_->getTransform()->eulerRotate(vec);
-	//printfDx("%f, %f, %f", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
+	ob_->getTransform()->setLocalEulerAngle(vec_);
+
+	printfDx("%f, %f, %f", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
 	//printfDx("%f, %f, %f\n", ob_->getTransform()->getScale().x, ob_->getTransform()->getScale().y, ob_->getTransform()->getScale().z);
 	//printfDx("%f, %f, %f\n", ob2_->getTransform()->getPosition().x, ob2_->getTransform()->getPosition().y, ob2_->getTransform()->getPosition().z);
 	ob_->getTransform()->getPosition();

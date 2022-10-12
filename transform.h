@@ -81,7 +81,7 @@ namespace ike {
 		/// ローカル座標系でのEulerAngleをangleに変更する
 		/// </summary>
 		/// <param name="angle"></param>
-		void setLoaclEulerAngle(const tnl::Vector3 angle);
+		void setLocalEulerAngle(const tnl::Vector3 angle);
 
 
 		//------------------Scale---------------------------------------------------
