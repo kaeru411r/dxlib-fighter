@@ -104,9 +104,9 @@ tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 	return angle;
 }
 void ike::Transform::setLocalEulerAngle(const tnl::Vector3 angle) {
-	tnl::Quaternion rot = tnl::Quaternion::RotationAxis(right(), tnl::ToRadian(angle.x));
-	rot *= tnl::Quaternion::RotationAxis(up(), tnl::ToRadian(angle.y));
-	rot *= tnl::Quaternion::RotationAxis(front(), tnl::ToRadian(angle.z));
+	tnl::Quaternion rot = tnl::Quaternion::RotationAxis(tnl::Vector3::TransformCoord(tnl::Vector3::right, rot), tnl::ToRadian(angle.x));
+	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::TransformCoord(tnl::Vector3::up, rot), tnl::ToRadian(angle.y));
+	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::TransformCoord(tnl::Vector3::front, rot), tnl::ToRadian(angle.z));
 	setLocalRotation(rot);
 }
 
