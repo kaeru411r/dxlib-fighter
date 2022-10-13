@@ -1,6 +1,9 @@
-#include "object .h"
+#pragma once
+#include "object.h"
+#include "../dxlib_ext/dxlib_ext.h"
+#include "meshTransform.h"
 
-class dxe::Camera;
+//class dxe::Camera;
 namespace ike {
 
 	class RenderObject : public Object {
@@ -11,11 +14,11 @@ namespace ike {
 
 		Transform* getTransform() const;
 
-		virtual void update(float deltaTime) {}
-
 		void render(const dxe::Camera* camera);
 
+
 	private:
+		
 
 		ike::MeshTransform* transform_;
 		

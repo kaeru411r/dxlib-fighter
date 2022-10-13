@@ -1,5 +1,7 @@
+#pragma once
 #include "renderObject.h"
-#include "../dxlib_ext/dxlib_ext.h";
+#include "component.h"
+
 
 ike::RenderObject::RenderObject(dxe::Mesh* mesh) {
 	transform_ = new ike::MeshTransform(mesh);
@@ -14,7 +16,7 @@ ike::Transform* ike::RenderObject::getTransform() const {
 	return transform_;
 }
 
+
 void ike::RenderObject::render(const dxe::Camera* camera) {
 	transform_->render(camera);
-	
 }

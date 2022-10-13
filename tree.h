@@ -3,7 +3,6 @@
 
 namespace ike {
 
-	
 	class Tree{
 
 	public:

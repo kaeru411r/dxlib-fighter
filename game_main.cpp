@@ -3,9 +3,10 @@
 #include "game_main.h"
 #include "../dxlib_ext/dxlib_ext.h"
 #include "transform.h"
-#include "object .h"
+#include "object.h"
 #include "tree.h"
 #include "renderObject.h"
+#include "testComponent.h"
 
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
@@ -54,6 +55,8 @@ void gameMain(float delta_time) {
 		//printfDx("%f\n", ob_->getTransform()->getEulerAngle().z);
 		ob_->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2_->getTransform()->setScale({ 1, 1, 1 });
+		ob_->addComponent(new ike::testComponent());
+		ob_->addComponent(new ike::testComponent());
 
 		init = true;
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
@@ -93,6 +96,8 @@ void gameMain(float delta_time) {
 	ob_->getTransform()->getScale();
 
 	camera->update();
+
+	ob_->update(delta_time);
 
 	ob_->render(camera);
 	ob2_->render(camera);
