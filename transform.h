@@ -2,6 +2,9 @@
 #include "tree.h"
 #include "../dxlib_ext/dxlib_ext.h"
 
+//オイラー角制御のビルドスイッチ
+#define EULER false
+
 namespace ike {
 
 	/// <summary>
@@ -61,7 +64,7 @@ namespace ike {
 		void setLocalRotation(const tnl::Quaternion rotation);
 
 		//--------------EulerAngle-------------------------------------------------
-
+#if EULER
 		/// <summary>
 		/// 現在のワールド座標系でのEulerAngleを返す
 		/// </summary>
@@ -83,7 +86,7 @@ namespace ike {
 		/// <param name="angle"></param>
 		void setLocalEulerAngle(const tnl::Vector3 angle);
 
-
+#endif
 		//------------------Scale---------------------------------------------------
 
 		/// <summary>
@@ -158,11 +161,13 @@ namespace ike {
 		/// </summary>
 		tnl::Vector3 front() const;
 
+#if EULER
 		/// <summary>
 		/// 現在の姿勢より自身の座標系でvalue度姿勢を変更する(未)
 		/// </summary>
 		/// <param name="value"></param>
 		void ownEulerRotate(const tnl::Vector3 value);
+#endif
 		/// <summary>
 		/// 現在の座標より自身の座標系でvalue座標を変更する(未)
 		/// </summary>
@@ -172,11 +177,13 @@ namespace ike {
 		//virtual void localEulerRotate(const tnl::Vector3 value);
 		//virtual void localMove(const tnl::Vector3 value);
 
+#if EULER
 		/// <summary>
 		/// 現在の姿勢よりワールド座標系でvalue度姿勢を変更する(未)
 		/// </summary>
 		/// <param name="value"></param>
 		void eulerRotate(const tnl::Vector3 value);
+#endif
 		/// <summary>
 		/// 現在の座標よりワールド座標系でvalue座標を変更する(未)
 		/// </summary>
@@ -184,8 +191,9 @@ namespace ike {
 		void move(const tnl::Vector3 value);
 
 	private:
-
+#if EULER
 		tnl::Quaternion eulerToQuaternion(tnl::Vector3 euler);
+#endif
 
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_;

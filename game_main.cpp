@@ -57,8 +57,6 @@ void gameMain(float delta_time) {
 
 		init = true;
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
-		vec_ = ob_->getTransform()->getLocalEulerAngle();
-		vec_ = ob_->getTransform()->getLocalEulerAngle();
 	}
 
 	clsDx();
@@ -90,24 +88,8 @@ void gameMain(float delta_time) {
 	//ob_->getTransform()->setScale(ob_->getTransform()->getScale() * 1.01);
 	//ob2_->getTransform()->eulerRotate({ 0.000001, 0, 0 });
 
-	ob_->getTransform()->setLocalEulerAngle(vec_);
-
-	printfDx("%f, %f, %f\n", vec_.x / 180 * tnl::PI, vec_.y / 180 * tnl::PI, vec_.z / 180 * tnl::PI);
-	printfDx("%f, %f, %f\n\n", vec_.x, vec_.y, vec_.z);
-	printfDx("%f, %f, %f\n", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
-	tnl::Vector3 angle = ob_->getTransform()->getRotation().getEuler();
-	printfDx("%f, %f, %f\n", angle.x, angle.y, angle.z);
-	printfDx("%f, %f, %f\n\n", ob_->getTransform()->getEulerAngle().x / angle.x, ob_->getTransform()->getEulerAngle().y / angle.y, ob_->getTransform()->getEulerAngle().z / angle.z);
-	//ob_->getTransform()->setEulerAngle(vec_);
-	printfDx("%f, %f, %f\n", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
-	angle = ob_->getTransform()->getRotation().getEuler();
-	printfDx("%f, %f, %f\n", angle.x, angle.y, angle.z);
-	printfDx("%f, %f, %f\n", ob_->getTransform()->getEulerAngle().x / angle.x, ob_->getTransform()->getEulerAngle().y / angle.y, ob_->getTransform()->getEulerAngle().z / angle.z);
-	//printfDx("%f, %f, %f\n", ob_->getTransform()->getScale().x, ob_->getTransform()->getScale().y, ob_->getTransform()->getScale().z);
-	//printfDx("%f, %f, %f\n", ob2_->getTransform()->getPosition().x, ob2_->getTransform()->getPosition().y, ob2_->getTransform()->getPosition().z);
+	//ob_->getTransform()->setLocalEulerAngle(vec_);
 	ob_->getTransform()->getPosition();
-	//ob_->getTransform()->getRotation();
-	ob_->getTransform()->getEulerAngle();
 	ob_->getTransform()->getScale();
 
 	camera->update();

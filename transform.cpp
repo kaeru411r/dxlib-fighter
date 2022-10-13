@@ -79,6 +79,7 @@ void ike::Transform::setLocalRotation(const tnl::Quaternion rotation) {
 	localRotation_ = rotation;
 }
 
+#if EULER
 tnl::Vector3 ike::Transform::getEulerAngle() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 angle = getParent()->getEulerAngle() + getLocalEulerAngle();
@@ -117,6 +118,7 @@ tnl::Quaternion ike::Transform::eulerToQuaternion(tnl::Vector3 euler) {
 	return rot;
 }
 
+#endif
 
 
 //--------------------スケール関連--------------------------------------
@@ -221,7 +223,7 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 		return;
 	}
 	//tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, getRotation());
-	tnl::Vector3 axis = getEulerAngle() + value;
+	tnl::Vector3 axis = right() + value;
 	move(axis);
 }
 
@@ -229,7 +231,7 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 
 //------------------回転関数-------------------------------
 
-
+#if EULER
 void ike::Transform::eulerRotate(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
@@ -247,3 +249,4 @@ void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 	axis = { axis.x * value.x, axis.y * value.y , axis.z * value.z };
 	eulerRotate(axis /** tnl::ToRadian(value.length())*/);
 }
+#endif
