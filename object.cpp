@@ -5,6 +5,7 @@ namespace ike {
 	}
 
 	Object::~Object() {
+		deleteAllComponents();
 	}
 
 
@@ -32,5 +33,13 @@ namespace ike {
 			it++;
 		}
 		return false;
+	}
+
+
+	void ike::Object::deleteAllComponents() {
+		for (int i = 0; i < components_.size(); ++i) {
+			delete(components_[i]);
+		}
+		components_.clear();
 	}
 }

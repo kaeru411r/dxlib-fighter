@@ -17,6 +17,8 @@ namespace ike {
 
 	private:
 
+		void deleteAllComponents();
+
 		std::vector<ike::Component*> components_;
 	};
 }

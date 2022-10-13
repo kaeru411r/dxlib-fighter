@@ -62,11 +62,10 @@ void gameMain(float delta_time) {
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
 	}
 
-	clsDx();
+	//clsDx();
 	//ob_->getTransform()->move({ 0, 0, 1 });
 
-	
-	//ƒ[ƒ‹
+		//ƒ[ƒ‹
 	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
 		vec_ += tnl::Vector3::front * 2;
 	}
