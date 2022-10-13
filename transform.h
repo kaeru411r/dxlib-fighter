@@ -185,6 +185,7 @@ namespace ike {
 
 	private:
 
+		tnl::Quaternion eulerToQuaternion(tnl::Vector3 euler);
 
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_;

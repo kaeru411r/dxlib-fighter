@@ -20,7 +20,7 @@ bool init = false;
 void gameMain(float delta_time) {
 	if (!init) {
 		camera = new dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
-		camera->pos_ = { 100, 100, -300 };
+		camera->pos_ = { 100, 100, 500 };
 		mesh = dxe::Mesh::CreateBoxMV(50);
 		mesh->setTexture(dxe::Texture::CreateFromFile("graphics/box.bmp"));
 		mesh->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
@@ -92,7 +92,17 @@ void gameMain(float delta_time) {
 
 	ob_->getTransform()->setLocalEulerAngle(vec_);
 
-	printfDx("%f, %f, %f", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
+	printfDx("%f, %f, %f\n", vec_.x / 180 * tnl::PI, vec_.y / 180 * tnl::PI, vec_.z / 180 * tnl::PI);
+	printfDx("%f, %f, %f\n\n", vec_.x, vec_.y, vec_.z);
+	printfDx("%f, %f, %f\n", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
+	tnl::Vector3 angle = ob_->getTransform()->getRotation().getEuler();
+	printfDx("%f, %f, %f\n", angle.x, angle.y, angle.z);
+	printfDx("%f, %f, %f\n\n", ob_->getTransform()->getEulerAngle().x / angle.x, ob_->getTransform()->getEulerAngle().y / angle.y, ob_->getTransform()->getEulerAngle().z / angle.z);
+	//ob_->getTransform()->setEulerAngle(vec_);
+	printfDx("%f, %f, %f\n", ob_->getTransform()->getEulerAngle().x, ob_->getTransform()->getEulerAngle().y, ob_->getTransform()->getEulerAngle().z);
+	angle = ob_->getTransform()->getRotation().getEuler();
+	printfDx("%f, %f, %f\n", angle.x, angle.y, angle.z);
+	printfDx("%f, %f, %f\n", ob_->getTransform()->getEulerAngle().x / angle.x, ob_->getTransform()->getEulerAngle().y / angle.y, ob_->getTransform()->getEulerAngle().z / angle.z);
 	//printfDx("%f, %f, %f\n", ob_->getTransform()->getScale().x, ob_->getTransform()->getScale().y, ob_->getTransform()->getScale().z);
 	//printfDx("%f, %f, %f\n", ob2_->getTransform()->getPosition().x, ob2_->getTransform()->getPosition().y, ob2_->getTransform()->getPosition().z);
 	ob_->getTransform()->getPosition();
