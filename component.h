@@ -1,14 +1,15 @@
 #pragma once
+#include "iUpdate.h"
 
 namespace ike {
 
-	class Component {
+	class Component : public ike::IUpdate {
 
 	public:
 		Component();
 		virtual ~Component();
 
-		virtual bool update(float deltaTime) = 0;
+		virtual bool update(const float deltaTime) = 0;
 
 
 	private:

@@ -10,10 +10,6 @@ namespace ike {
 
 
 	bool ike::Object::update(const float deltaTime) {
-		for (ike::Component* c : components_) {
-			c->update(deltaTime);
-		}
-		return true;
 	}
 
 	bool ike::Object::addComponent(ike::Component* component) {
