@@ -9,9 +9,6 @@ namespace ike {
 	}
 
 
-	bool ike::Object::update(const float deltaTime) {
-	}
-
 	bool ike::Object::addComponent(ike::Component* component) {
 		components_.emplace_back(component);
 		return true;

@@ -1,17 +1,14 @@
 #pragma once
 #include "component.h"
 #include <vector>
-#include "iUpdate.h"
 
 namespace ike {
-	class Object : public ike::IUpdate {
+	class Object{
 
 	public:
 
 		Object();
 		virtual ~Object();
-
-		virtual bool update(const float deltaTime);
 
 		bool addComponent(ike::Component* component);
 		bool removeComponent(ike::Component* component);
