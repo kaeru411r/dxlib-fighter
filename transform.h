@@ -10,7 +10,7 @@ namespace ike {
 	/// <summary>
 	/// 座標、姿勢、サイズを管理するクラス
 	/// </summary>
-	class Transform : public ike::Tree {
+	class Transform{
 
 	public:
 		Transform();
@@ -190,6 +190,21 @@ namespace ike {
 		/// <param name="value"></param>
 		void move(const tnl::Vector3 value);
 
+
+
+		void removeAllChildren();
+	protected:
+
+
+		bool setParent(Transform* data);
+
+		//Transform* getParent2() const;
+		//std::list<Transform*> getChildren2() const;
+
+		bool childrenContains(const Transform* data);
+		bool allChildrenContains(const Transform* data);
+
+
 	private:
 #if EULER
 		tnl::Quaternion eulerToQuaternion(tnl::Vector3 euler);
@@ -199,5 +214,11 @@ namespace ike {
 		tnl::Vector3 localPosition_;
 		tnl::Vector3 localScale_;
 
+
+		Transform* parent_ = nullptr;
+		std::list<Transform*> children_;
+
+		void addChild(Transform* data);
+		void removeChild(Transform* data);
 	};
 }
