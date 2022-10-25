@@ -9,7 +9,7 @@ namespace ike {
 		Component();
 		virtual ~Component();
 
-		virtual bool update(const float deltaTime) = 0;
+		virtual bool update(const float deltaTime) {};
 
 
 	private:

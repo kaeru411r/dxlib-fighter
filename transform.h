@@ -1,6 +1,7 @@
 #pragma once
 #include "tree.h"
 #include "../dxlib_ext/dxlib_ext.h"
+#include "component.h"
 
 //オイラー角制御のビルドスイッチ
 #define EULER false
@@ -10,7 +11,7 @@ namespace ike {
 	/// <summary>
 	/// 座標、姿勢、サイズを管理するクラス
 	/// </summary>
-	class Transform{
+	class Transform :public ike::Component{
 
 	public:
 		Transform();

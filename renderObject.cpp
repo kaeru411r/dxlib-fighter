@@ -1,10 +1,10 @@
 #pragma once
 #include "renderObject.h"
-#include "component.h"
+//#include "component.h"
 
 
 ike::RenderObject::RenderObject(dxe::Mesh* mesh) {
-	transform_ = new ike::MeshTransform(mesh);
+	addComponent(new ike::MeshTransform(mesh));
 }
 
 ike::RenderObject::~RenderObject() {

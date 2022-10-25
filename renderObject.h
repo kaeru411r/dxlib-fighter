@@ -12,15 +12,10 @@ namespace ike {
 		RenderObject(dxe::Mesh* mesh);
 		~RenderObject();
 
-		Transform* getTransform() const;
-
-		void render(const dxe::Camera* camera);
 
 
 	private:
 		
-
-		ike::MeshTransform* transform_;
 		
 	};
 
