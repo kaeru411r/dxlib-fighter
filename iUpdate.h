@@ -11,6 +11,10 @@ namespace ike {
 
 		virtual bool update(const float deltaTime) = 0;
 
+		virtual bool fixedUpdate(const float fixedDeltaTime) = 0;
+
+
+
 	private:
 
 
