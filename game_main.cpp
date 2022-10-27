@@ -1,9 +1,9 @@
+#pragma once
 #include <time.h>
 #include <algorithm>
 #include "game_main.h"
 #include "../dxlib_ext/dxlib_ext.h"
 #include "transform.h"
-#include "object .h"
 #include "tree.h"
 #include "renderObject.h"
 
@@ -14,7 +14,6 @@ dxe::Mesh* mesh3 = nullptr;
 ike::RenderObject* ob_ = nullptr;
 ike::RenderObject* ob2_ = nullptr;
 ike::RenderObject* ob3_ = nullptr;
-tnl::Vector3 vec_;
 
 bool init = false;
 void gameMain(float delta_time) {
@@ -62,36 +61,32 @@ void gameMain(float delta_time) {
 	clsDx();
 	//ob_->getTransform()->move({ 0, 0, 1 });
 
-	
+
+	tnl::Vector3 vec;
 	//ロール
-	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-		vec_ += tnl::Vector3::front * 2;
-	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-		vec_ += -tnl::Vector3::front * 2;
-	}
-	//ピッチ
 	if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
-		vec_ += -tnl::Vector3::left * 2;
+		vec += tnl::Vector3::front * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
-		vec_ += tnl::Vector3::left * 2;
+		vec += -tnl::Vector3::front * 2;
+	}
+	//ピッチ
+	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
+		vec += -tnl::Vector3::right * 2;
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
+		vec += tnl::Vector3::right * 2;
 	}
 	//ヨー
 	if (tnl::Input::IsKeyDown(eKeys::KB_Q)) {
-		vec_ += -tnl::Vector3::up * 2;
+		vec += -tnl::Vector3::up * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_E)) {
-		vec_ += tnl::Vector3::up * 2;
+		vec += tnl::Vector3::up * 2;
 	}
-	//ob_->getTransform()->ownMove(tnl::Vector3::front);
-	//ob_->getTransform()->setScale(ob_->getTransform()->getScale() * 1.01);
-	//ob2_->getTransform()->eulerRotate({ 0.000001, 0, 0 });
-
-	//ob_->getTransform()->setLocalEulerAngle(vec_);
-	ob_->getTransform()->getPosition();
-	ob_->getTransform()->getScale();
-
+	ob_->getTransform()->ownEulerRotate(vec);
+	ob3_->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
+	ob_->getTransform()->move(tnl::Vector3::right);
 	camera->update();
 
 	ob_->render(camera);

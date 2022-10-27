@@ -1,17 +1,16 @@
-#include "object .h"
+#pragma once
+#include "object.h"
 
 class dxe::Camera;
 namespace ike {
 
-	class RenderObject : public Object {
+	class RenderObject : public ike::Object {
 	public:
 
 		RenderObject(dxe::Mesh* mesh);
 		~RenderObject();
 
 		Transform* getTransform() const;
-
-		virtual void update(float deltaTime) {}
 
 		void render(const dxe::Camera* camera);
 
