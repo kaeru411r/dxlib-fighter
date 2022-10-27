@@ -223,7 +223,7 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 		return;
 	}
 	//tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, getRotation());
-	tnl::Vector3 axis = right() + value;
+	tnl::Vector3 axis = tnl::Vector3::TransformCoord(value, getRotation());
 	move(axis);
 }
 

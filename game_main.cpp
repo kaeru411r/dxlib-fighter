@@ -36,8 +36,8 @@ void gameMain(float delta_time) {
 		ob2_->getTransform()->setParent(ob_->getTransform());
 		ob3_->getTransform()->setParent(ob2_->getTransform());
 		ob_->getTransform()->setParent(ob3_->getTransform());
-		ob2_->getTransform()->setPosition({ -50, 0, 0 });
-		ob3_->getTransform()->setLocalPosition({ -50, 0, 0 });
+		ob2_->getTransform()->setLocalPosition({ 0, 0, 50 });
+		ob3_->getTransform()->setLocalPosition({ 0, 0, 50 });
 		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
 		//ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
 		//ob_->getTransform()->setLocalEulerAngle({ tnl::PI / 2, 0, 0 });
@@ -65,17 +65,17 @@ void gameMain(float delta_time) {
 	tnl::Vector3 vec;
 	//ロール
 	if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
-		vec += tnl::Vector3::front * 2;
+		vec += tnl::Vector3::right * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
-		vec += -tnl::Vector3::front * 2;
+		vec += -tnl::Vector3::right * 2;
 	}
 	//ピッチ
 	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-		vec += -tnl::Vector3::right * 2;
+		vec += -tnl::Vector3::front * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-		vec += tnl::Vector3::right * 2;
+		vec += tnl::Vector3::front * 2;
 	}
 	//ヨー
 	if (tnl::Input::IsKeyDown(eKeys::KB_Q)) {
@@ -85,8 +85,8 @@ void gameMain(float delta_time) {
 		vec += tnl::Vector3::up * 2;
 	}
 	ob_->getTransform()->ownEulerRotate(vec);
-	ob3_->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
-	ob_->getTransform()->move(tnl::Vector3::right);
+	ob2_->getTransform()->ownEulerRotate(tnl::Vector3::front * 10);
+	ob_->getTransform()->ownMove(tnl::Vector3::front);
 	camera->update();
 
 	ob_->render(camera);
