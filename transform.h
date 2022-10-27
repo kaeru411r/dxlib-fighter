@@ -5,6 +5,7 @@
 
 //オイラー角制御のビルドスイッチ
 #define EULER false
+#define ROTATE true
 
 namespace ike {
 
@@ -162,7 +163,7 @@ namespace ike {
 		/// </summary>
 		tnl::Vector3 front() const;
 
-#if EULER
+#if ROTATE
 		/// <summary>
 		/// 現在の姿勢より自身の座標系でvalue度姿勢を変更する(未)
 		/// </summary>
@@ -178,9 +179,9 @@ namespace ike {
 		//virtual void localEulerRotate(const tnl::Vector3 value);
 		//virtual void localMove(const tnl::Vector3 value);
 
-#if EULER
+#if ROTATE
 		/// <summary>
-		/// 現在の姿勢よりワールド座標系でvalue度姿勢を変更する(未)
+		/// 
 		/// </summary>
 		/// <param name="value"></param>
 		void eulerRotate(const tnl::Vector3 value);

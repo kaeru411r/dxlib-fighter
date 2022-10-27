@@ -1,12 +1,11 @@
+#pragma once
 #include <time.h>
 #include <algorithm>
 #include "game_main.h"
 #include "../dxlib_ext/dxlib_ext.h"
 #include "transform.h"
-#include "object.h"
 #include "tree.h"
 #include "renderObject.h"
-#include "testComponent.h"
 
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
@@ -15,7 +14,6 @@ dxe::Mesh* mesh3 = nullptr;
 ike::RenderObject* ob_ = nullptr;
 ike::RenderObject* ob2_ = nullptr;
 ike::RenderObject* ob3_ = nullptr;
-tnl::Vector3 vec_;
 
 bool init = false;
 void gameMain(float delta_time) {
@@ -38,8 +36,8 @@ void gameMain(float delta_time) {
 		ob2_->getTransform()->setParent(ob_->getTransform());
 		ob3_->getTransform()->setParent(ob2_->getTransform());
 		ob_->getTransform()->setParent(ob3_->getTransform());
-		ob2_->getTransform()->setPosition({ -50, 0, 0 });
-		ob3_->getTransform()->setLocalPosition({ -50, 0, 0 });
+		ob2_->getTransform()->setLocalPosition({ 0, 0, 50 });
+		ob3_->getTransform()->setLocalPosition({ 0, 0, 50 });
 		//ob_->getTransform()->setRotation(tnl::Quaternion::RotationAxis({ 0, 1, 0 }, 3.141592f));
 		//ob2_->getTransform()->setLocalPosition({ 50, 0, 0 });
 		//ob_->getTransform()->setLocalEulerAngle({ tnl::PI / 2, 0, 0 });
@@ -55,48 +53,41 @@ void gameMain(float delta_time) {
 		//printfDx("%f\n", ob_->getTransform()->getEulerAngle().z);
 		ob_->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2_->getTransform()->setScale({ 1, 1, 1 });
-		ob_->addComponent(new ike::testComponent());
-		ob_->addComponent(new ike::testComponent());
 
 		init = true;
 		//ob_->getTransform()->setEulerAngle({ tnl::ToRadian( 90), 0, 0 });
 	}
 
-	//clsDx();
+	clsDx();
 	//ob_->getTransform()->move({ 0, 0, 1 });
 
-		//ロール
-	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-		vec_ += tnl::Vector3::front * 2;
-	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-		vec_ += -tnl::Vector3::front * 2;
-	}
-	//ピッチ
+
+	tnl::Vector3 vec;
+	//ロール
 	if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
-		vec_ += -tnl::Vector3::left * 2;
+		vec += tnl::Vector3::right * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
-		vec_ += tnl::Vector3::left * 2;
+		vec += -tnl::Vector3::right * 2;
+	}
+	//ピッチ
+	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
+		vec += -tnl::Vector3::front * 2;
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
+		vec += tnl::Vector3::front * 2;
 	}
 	//ヨー
 	if (tnl::Input::IsKeyDown(eKeys::KB_Q)) {
-		vec_ += -tnl::Vector3::up * 2;
+		vec += -tnl::Vector3::up * 2;
 	}
 	if (tnl::Input::IsKeyDown(eKeys::KB_E)) {
-		vec_ += tnl::Vector3::up * 2;
+		vec += tnl::Vector3::up * 2;
 	}
-	//ob_->getTransform()->ownMove(tnl::Vector3::front);
-	//ob_->getTransform()->setScale(ob_->getTransform()->getScale() * 1.01);
-	//ob2_->getTransform()->eulerRotate({ 0.000001, 0, 0 });
-
-	//ob_->getTransform()->setLocalEulerAngle(vec_);
-	ob_->getTransform()->getPosition();
-	ob_->getTransform()->getScale();
-
+	ob_->getTransform()->ownEulerRotate(vec);
+	ob2_->getTransform()->ownEulerRotate(tnl::Vector3::front * 10);
+	ob_->getTransform()->ownMove(tnl::Vector3::front);
 	camera->update();
-
-	ob_->update(delta_time);
 
 	ob_->render(camera);
 	ob2_->render(camera);

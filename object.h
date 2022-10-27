@@ -1,22 +1,23 @@
 #pragma once
-#include "component.h"
-#include <vector>
+#include <time.h>
+#include <algorithm>
+#include "game_main.h"
+#include "../dxlib_ext/dxlib_ext.h"
+#include "meshTransform.h"
+#include "iUpdate.h"
 
 namespace ike {
-	class Object{
+	class Object : ike::IUpdate{
 
 	public:
 
 		Object();
-		virtual ~Object();
+		~Object();
 
-		bool addComponent(ike::Component* component);
-		bool removeComponent(ike::Component* component);
+		virtual bool update(const float deltaTime) { return true; }
+
+		virtual bool fixedUpdate(const float fixedDeltaTime) { return true; }
 
 	private:
-
-		void deleteAllComponents();
-
-		std::vector<ike::Component*> components_;
 	};
 }
