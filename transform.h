@@ -1,7 +1,6 @@
 #pragma once
 #include "tree.h"
 #include "../dxlib_ext/dxlib_ext.h"
-#include "component.h"
 
 //オイラー角制御のビルドスイッチ
 #define EULER false
@@ -12,11 +11,11 @@ namespace ike {
 	/// <summary>
 	/// 座標、姿勢、サイズを管理するクラス
 	/// </summary>
-	class Transform :public ike::Component{
+	class Transform : ike::Tree{
 
 	public:
 		Transform();
-		~Transform();
+		virtual ~Transform();
 
 		//-------------Position--------------------------------------------------
 
@@ -194,17 +193,8 @@ namespace ike {
 
 
 
-		void removeAllChildren();
 	protected:
 
-
-		bool setParent(Transform* data);
-
-		//Transform* getParent2() const;
-		//std::list<Transform*> getChildren2() const;
-
-		bool childrenContains(const Transform* data);
-		bool allChildrenContains(const Transform* data);
 
 
 	private:
@@ -217,10 +207,5 @@ namespace ike {
 		tnl::Vector3 localScale_;
 
 
-		Transform* parent_ = nullptr;
-		std::list<Transform*> children_;
-
-		void addChild(Transform* data);
-		void removeChild(Transform* data);
 	};
 }

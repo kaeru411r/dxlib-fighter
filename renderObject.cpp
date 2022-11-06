@@ -4,7 +4,7 @@
 
 
 ike::RenderObject::RenderObject(dxe::Mesh* mesh) {
-	addComponent(new ike::MeshTransform(mesh));
+	transform_ = new ike::MeshTransform(mesh);
 }
 
 ike::RenderObject::~RenderObject() {
