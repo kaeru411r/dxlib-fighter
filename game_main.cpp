@@ -11,9 +11,10 @@ dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
 dxe::Mesh* mesh2 = nullptr;
 dxe::Mesh* mesh3 = nullptr;
-ike::RenderObject* ob_ = nullptr;
-ike::RenderObject* ob2_ = nullptr;
-ike::RenderObject* ob3_ = nullptr;
+ike::RenderObject* ob = nullptr;
+ike::RenderObject* ob2 = nullptr;
+ike::RenderObject* ob3 = nullptr;
+float size = 1;
 
 bool init = false;
 void gameMain(float delta_time) {
@@ -45,7 +46,14 @@ void gameMain(float delta_time) {
 	}
 
 	clsDx();
-	//ob_->getTransform()->move({ 0, 0, 1 });
+	printfDx("ヨー　    　Q,E\n");
+	printfDx("ロール　    A,D\n");
+	printfDx("ピッチ　    W,S\n");
+	printfDx("拡大、縮小　↑,↓\n");
+	tnl::Quaternion rotation = ob2->getTransform()->toWorldRotation(ob2->getTransform()->toLocalRotation(tnl::Quaternion()));
+	tnl::Quaternion rotation2 = ob2->getTransform()->getRotation();
+	printfDx("%f %f %f %f\n", rotation.x, rotation.y, rotation.z, rotation.w);
+	printfDx("%f %f %f %f\n", rotation2.x, rotation2.y, rotation2.z, rotation2.w);
 
 
 	tnl::Vector3 vec;
@@ -77,6 +85,8 @@ void gameMain(float delta_time) {
 		size *= 0.99f;
 	}
 	ob->getTransform()->ownEulerRotate(vec);
+	//ob2->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
+	//ob3->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
 	ob->getTransform()->ownMove(tnl::Vector3::left * size);
 	ob->getTransform()->setScale({ size, size , size });
 	camera->update();

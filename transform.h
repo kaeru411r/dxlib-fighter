@@ -5,6 +5,7 @@
 //オイラー角制御のビルドスイッチ
 #define EULER false
 #define ROTATE true
+#define CONVERT true
 
 namespace ike {
 
@@ -146,6 +147,20 @@ namespace ike {
 		/// <returns></returns>
 		bool allChildrenContains(const Transform* data);
 
+
+		//--------------座標系変換----------------------
+		
+#if CONVERT
+
+		//親のこの関数に値を渡してやることで、ワールドから子、子からワールドに変換できる
+		tnl::Vector3 toWarldPosition(const tnl::Vector3& position) const;
+		tnl::Vector3 toLocalPosition(const tnl::Vector3& position) const;
+		tnl::Vector3 toWarldScale(const tnl::Vector3& scale) const;
+		tnl::Vector3 toLocalScale(const tnl::Vector3& scale) const;
+		tnl::Quaternion toWorldRotation(const tnl::Quaternion& rotation) const noexcept;
+		tnl::Quaternion toLocalRotation(const tnl::Quaternion& rotation) const noexcept;
+
+#endif
 
 		//--------------その他--------------------------
 

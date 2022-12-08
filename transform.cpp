@@ -57,7 +57,7 @@ void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 
 
 
-//-------------épê®ä÷òA-------------------------------------
+//-------------âÒì]ä÷òA-------------------------------------
 
 
 tnl::Quaternion ike::Transform::getRotation() const {
@@ -130,6 +130,7 @@ tnl::Quaternion ike::Transform::eulerToQuaternion(tnl::Vector3 euler) {
 
 
 tnl::Vector3 ike::Transform::getScale() const {
+	this;
 	if (getParent() != nullptr) {
 		tnl::Vector3 parentScale = getParent()->getScale();
 		return { parentScale.x * getLocalScale().x, parentScale.y * getLocalScale().y , parentScale.z * getLocalScale().z };
@@ -223,9 +224,6 @@ void ike::Transform::move(const tnl::Vector3 value) {
 	if (value.length() == 0) {
 		return;
 	}
-	clsDx();
-	printfDx("%f, %f, %f\n", getPosition().x, getPosition().y, getPosition().z);
-	printfDx("%f, %f, %f\n", value.x, value.y, value.z);
 	setPosition(getPosition() + value);
 }
 
@@ -254,5 +252,34 @@ void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 		return;
 	}
 	tnl::Vector3 vec = tnl::Vector3::TransformCoord(value, getLocalRotation());
+	setLocalRotation(getLocalRotation() * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(vec), vec.length() / 180 * tnl::PI));
+}
+#endif
+
+
+//-----------------ç¿ïWånïœä∑-------------------------------------------------
+
+#if CONVERT
+tnl::Vector3 ike::Transform::toWarldPosition(const tnl::Vector3& position) const {
+	tnl::Vector3 result;
+	return result;
+}
+tnl::Vector3 ike::Transform::toLocalPosition(const tnl::Vector3& position) const {
+	tnl::Vector3 result;
+	return result;
+}
+tnl::Vector3 ike::Transform::toWarldScale(const tnl::Vector3& scale) const {
+	tnl::Vector3 thisScale = getScale();
+	return tnl::Vector3(thisScale.x * scale.x, thisScale.y * scale.y, thisScale.z * scale.z);
+}
+tnl::Vector3 ike::Transform::toLocalScale(const tnl::Vector3& scale) const {
+	tnl::Vector3 thisScale = getScale();
+	return tnl::Vector3(scale.x / thisScale.x, scale.y / thisScale.y, scale.z / thisScale.z);
+}
+tnl::Quaternion ike::Transform::toWorldRotation(const tnl::Quaternion& rotation) const noexcept{
+	return tnl::Quaternion::Subtract(getRotation(), rotation);
+}
+tnl::Quaternion ike::Transform::toLocalRotation(const tnl::Quaternion& rotation) const noexcept {
+	return tnl::Quaternion::Subtract(rotation, getRotation());
 }
 #endif
