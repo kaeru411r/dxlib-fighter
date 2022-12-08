@@ -4,7 +4,7 @@
 class dxe::Camera;
 namespace ike {
 
-	class RenderObject : public ike::Object {
+	class RenderObject : public ike::Object{
 	public:
 
 		RenderObject(dxe::Mesh* mesh);
@@ -12,7 +12,7 @@ namespace ike {
 
 		Transform* getTransform() const;
 
-		void render(const dxe::Camera* camera);
+		bool render(const dxe::Camera* camera);
 
 	private:
 

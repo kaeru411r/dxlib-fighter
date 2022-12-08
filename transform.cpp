@@ -2,12 +2,15 @@
 
 //using namespace ike;
 
+
 ike::Transform::Transform() {
+	tree_ = new ike::Tree<ike::Transform>(this);
 	localPosition_ = { 0, 0, 0 };
 	localRotation_ = tnl::Quaternion();
 	localScale_ = { 1, 1, 1 };
 }
 ike::Transform::~Transform() {
+	delete(tree_);
 }
 
 
@@ -18,7 +21,9 @@ ike::Transform::~Transform() {
 		/// <returns></returns>
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
-		tnl::Vector3 parentScale = getParent()->getScale();
+		this;
+		ike::Transform* parent = getParent();
+		tnl::Vector3 parentScale = parent->getScale();
 		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x * parentScale.x);
 		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y * parentScale.y);
 		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z * parentScale.z);
@@ -165,25 +170,31 @@ bool ike::Transform::setParent(Transform* parent) {
 	}
 	localPosition_ += pos;
 	//localRotation_ *= 
-	return ike::Tree::setParent(parent);
+	return tree_->setParent(parent->tree_);
 }
 
 ike::Transform* ike::Transform::getParent() const {
-	return dynamic_cast<Transform*>(ike::Tree::getParent());
+	this;
+	if (tree_->getParent() != nullptr) {
+		return (ike::Transform*)(tree_->getParent()->getData());
+	}
+	else {
+		return nullptr;
+	}
 }
 std::list<ike::Transform*> ike::Transform::getChildren() const {
 	std::list<ike::Transform*> list;
-	for (ike::Tree* t : ike::Tree::getChildren()) {
-		list.push_back(dynamic_cast<ike::Transform*>(t));
+	for (ike::Tree<ike::Transform>* t : tree_->getChildren()) {
+		list.push_back((ike::Transform*)t);
 	}
 	return list;
 }
 
 bool ike::Transform::childrenContains(const Transform* data) {
-	return ike::Tree::childrenContains(data);
+	return tree_->childrenContains((ike::Transform*)tree_);
 }
 bool ike::Transform::allChildrenContains(const Transform* data) {
-	return ike::Tree::allChildrenContains(data);
+	return tree_->allChildrenContains((ike::Transform*)tree_);
 }
 
 
@@ -243,11 +254,5 @@ void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 		return;
 	}
 	tnl::Vector3 vec = tnl::Vector3::TransformCoord(value, getLocalRotation());
-	setLocalRotation(getLocalRotation()* tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(vec), vec.length() / 180 * tnl::PI));
-	//tnl::Vector3 axis = { tnl::ToRadian(value.x), tnl::ToRadian(value.y), tnl::ToRadian(value.z) };
-	//tnl::Vector3 axis = tnl::Vector3::TransformCoord(tnl::Vector3::Normalize(value), getRotation())/* * value.length()*/;
-	//tnl::Vector3 axis = getEulerAngle() + value;
-	//axis = { axis.x * value.x, axis.y * value.y , axis.z * value.z };
-	//eulerRotate(axis /** tnl::ToRadian(value.length())*/);
 }
 #endif

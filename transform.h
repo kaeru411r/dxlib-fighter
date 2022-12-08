@@ -11,7 +11,7 @@ namespace ike {
 	/// <summary>
 	/// 座標、姿勢、サイズを管理するクラス
 	/// </summary>
-	class Transform : ike::Tree{
+	class Transform{
 
 	public:
 		Transform();
@@ -201,6 +201,8 @@ namespace ike {
 #if EULER
 		tnl::Quaternion eulerToQuaternion(tnl::Vector3 euler);
 #endif
+
+		ike::Tree<Transform>* tree_;
 
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_;
