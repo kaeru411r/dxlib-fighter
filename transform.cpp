@@ -163,14 +163,16 @@ void ike::Transform::setLocalScale(const tnl::Vector3 scale) {
 
 
 bool ike::Transform::setParent(Transform* parent) {
-	tnl::Vector3 pos = -parent->getPosition();
-	//tnl::Vector3 rot = -parent->localRotation_.getEuler();
 	if (getParent() != nullptr) {
-		pos += getParent()->getPosition();
-		//rot += getParent()->localRotation_.getEuler();
+		setLocalPosition(parent->toLocalPosition(getPosition()));
+		setLocalScale(parent->toLocalScale(getScale()));
+		setLocalRotation(parent->toLocalRotation(getRotation()));
 	}
-	localPosition_ += pos;
-	//localRotation_ *= 
+	else {
+		setLocalPosition(getPosition());
+		setLocalScale(getScale());
+		setLocalRotation(getRotation());
+	}
 	return tree_->setParent(parent->tree_);
 }
 
