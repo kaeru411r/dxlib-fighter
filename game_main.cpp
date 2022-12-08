@@ -50,10 +50,12 @@ void gameMain(float delta_time) {
 	printfDx("ロール　    A,D\n");
 	printfDx("ピッチ　    W,S\n");
 	printfDx("拡大、縮小　↑,↓\n");
-	tnl::Quaternion rotation = ob2->getTransform()->toWorldRotation(ob2->getTransform()->toLocalRotation(tnl::Quaternion()));
-	tnl::Quaternion rotation2 = ob2->getTransform()->getRotation();
-	printfDx("%f %f %f %f\n", rotation.x, rotation.y, rotation.z, rotation.w);
-	printfDx("%f %f %f %f\n", rotation2.x, rotation2.y, rotation2.z, rotation2.w);
+	tnl::Vector3 position = ob->getTransform()->toWarldPosition(ob->getTransform()->toLocalPosition({0, 0, 0}));
+	tnl::Vector3 position3 = ob->getTransform()->toLocalPosition({0, 0, 0});
+	tnl::Vector3 position2 = ob->getTransform()->getPosition();
+	printfDx("%f %f %f\n", position.x, position.y, position.z);
+	printfDx("%f %f %f\n", position3.x, position3.y, position3.z);
+	printfDx("%f %f %f\n", position2.x, position2.y, position2.z);
 
 
 	tnl::Vector3 vec;

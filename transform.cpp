@@ -208,7 +208,7 @@ tnl::Vector3 ike::Transform::up() const {
 	return tnl::Vector3::TransformCoord(tnl::Vector3::up, getRotation());
 }
 tnl::Vector3 ike::Transform::right() const {
-	return tnl::Vector3::TransformCoord(-tnl::Vector3::left, getRotation());
+	return tnl::Vector3::TransformCoord(tnl::Vector3::right, getRotation());
 }
 tnl::Vector3 ike::Transform::front() const {
 	return tnl::Vector3::TransformCoord(tnl::Vector3::front, getRotation());
@@ -261,12 +261,23 @@ void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 
 #if CONVERT
 tnl::Vector3 ike::Transform::toWarldPosition(const tnl::Vector3& position) const {
-	tnl::Vector3 result;
-	return result;
+	tnl::Vector3 scale = getScale();
+	tnl::Vector3 right = this->right() * (position.x * scale.x);
+	tnl::Vector3 up = this ->up() * (position.y * scale.y);
+	tnl::Vector3 front = this->front() * (position.z * scale.z);
+	tnl::Vector3 pos = right + up + front;
+	return getPosition() + pos;
 }
 tnl::Vector3 ike::Transform::toLocalPosition(const tnl::Vector3& position) const {
-	tnl::Vector3 result;
-	return result;
+	tnl::Vector3 worldRight = right() * tnl::Vector3::Dot(right(), position - getPosition());
+	tnl::Vector3 worldUp = up() * tnl::Vector3::Dot(up(), position - getPosition());
+	tnl::Vector3 worldFront = front() * tnl::Vector3::Dot(front(), position - getPosition());
+	tnl::Vector3 scale = getScale();
+	tnl::Vector3 right = worldRight * (getPosition().x * scale.x);
+	tnl::Vector3 up = worldUp * (getPosition().y * scale.y);
+	tnl::Vector3 front = worldFront * (getPosition().z * scale.z);
+	tnl::Vector3 pos = worldRight + worldUp + worldFront;
+	return getPosition() + pos;
 }
 tnl::Vector3 ike::Transform::toWarldScale(const tnl::Vector3& scale) const {
 	tnl::Vector3 thisScale = getScale();
