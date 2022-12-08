@@ -269,15 +269,15 @@ tnl::Vector3 ike::Transform::toWarldPosition(const tnl::Vector3& position) const
 	return getPosition() + pos;
 }
 tnl::Vector3 ike::Transform::toLocalPosition(const tnl::Vector3& position) const {
-	tnl::Vector3 worldRight = right() * tnl::Vector3::Dot(right(), position - getPosition());
-	tnl::Vector3 worldUp = up() * tnl::Vector3::Dot(up(), position - getPosition());
-	tnl::Vector3 worldFront = front() * tnl::Vector3::Dot(front(), position - getPosition());
 	tnl::Vector3 scale = getScale();
+	tnl::Vector3 worldRight = tnl::Vector3::right * tnl::Vector3::Dot(right(), position - getPosition()) / scale.x;
+	tnl::Vector3 worldUp = tnl::Vector3::up * tnl::Vector3::Dot(up(), position - getPosition()) / scale.y;
+	tnl::Vector3 worldFront = tnl::Vector3::front * tnl::Vector3::Dot(front(), position - getPosition()) / scale.z;
 	tnl::Vector3 right = worldRight * (getPosition().x * scale.x);
 	tnl::Vector3 up = worldUp * (getPosition().y * scale.y);
 	tnl::Vector3 front = worldFront * (getPosition().z * scale.z);
 	tnl::Vector3 pos = worldRight + worldUp + worldFront;
-	return getPosition() + pos;
+	return pos;
 }
 tnl::Vector3 ike::Transform::toWarldScale(const tnl::Vector3& scale) const {
 	tnl::Vector3 thisScale = getScale();
