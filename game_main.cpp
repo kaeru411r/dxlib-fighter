@@ -15,6 +15,7 @@ ike::RenderObject* ob = nullptr;
 ike::RenderObject* ob2 = nullptr;
 ike::RenderObject* ob3 = nullptr;
 float size = 1;
+float angle = 45;
 
 bool init = false;
 void gameMain(float delta_time) {
@@ -60,36 +61,41 @@ void gameMain(float delta_time) {
 
 	tnl::Vector3 vec;
 	//ロール
-	if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
-		vec += tnl::Vector3::front * 2;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
+		vec += tnl::Vector3::front * angle;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
-		vec += -tnl::Vector3::front * 2;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_S)) {
+		vec += -tnl::Vector3::front * angle;
 	}
 	//ピッチ
-	if (tnl::Input::IsKeyDown(eKeys::KB_A)) {
-		vec += -tnl::Vector3::right * 2;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_A)) {
+		vec += -tnl::Vector3::right * angle;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
-		vec += tnl::Vector3::right * 2;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_D)) {
+		vec += tnl::Vector3::right * angle;
 	}
 	//ヨー
-	if (tnl::Input::IsKeyDown(eKeys::KB_Q)) {
-		vec += -tnl::Vector3::up * 2;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
+		vec += -tnl::Vector3::up * angle;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_E)) {
-		vec += tnl::Vector3::up * 2;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_E)) {
+		vec += tnl::Vector3::up * angle;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_UP)) {
-		size *= 1.01f;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+		size *= 2.0f;
 	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_DOWN)) {
-		size *= 0.99f;
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+		size *= 0.5f;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		ob->getTransform()->ownMove(tnl::Vector3::left * size * 30);
+	}
+	if(tnl::Input::IsKeyDownTrigger(eKeys::KB_BACK)) {
+		ob->getTransform()->ownMove(tnl::Vector3::right * size * 30);
 	}
 	ob->getTransform()->ownEulerRotate(vec);
 	//ob2->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
 	//ob3->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
-	ob->getTransform()->ownMove(tnl::Vector3::left * size);
 	ob->getTransform()->setScale({ size, size , size });
 	camera->update();
 
