@@ -121,8 +121,7 @@ tnl::Quaternion ike::Transform::eulerToQuaternion(tnl::Vector3 euler) {
 tnl::Vector3 ike::Transform::getScale() const {
 	this;
 	if (getParent() != nullptr) {
-		tnl::Vector3 parentScale = getParent()->getScale();
-		return { parentScale.x * getLocalScale().x, parentScale.y * getLocalScale().y , parentScale.z * getLocalScale().z };
+		return getParent()->toWarldScale(getLocalScale());
 	}
 	else {
 		return getLocalScale();
@@ -130,8 +129,7 @@ tnl::Vector3 ike::Transform::getScale() const {
 }
 void ike::Transform::setScale(const tnl::Vector3 scale) {
 	if (getParent() != nullptr) {
-		tnl::Vector3 parentScale = getParent()->getScale();
-		setLocalScale({ scale.x / parentScale.y, scale.y / parentScale.x, scale.z / parentScale.z });
+		setLocalScale(getParent()->toLocalScale(scale));
 	}
 	else {
 		setLocalScale(scale);
