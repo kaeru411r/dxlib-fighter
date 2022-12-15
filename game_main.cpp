@@ -32,15 +32,15 @@ void gameMain(float delta_time) {
 		mesh3 = mesh->createClone();
 		mesh3->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
 		ob3 = new ike::RenderObject(mesh3);
-		//ike::Tree* t = tr_;
+		//ob->getTransform()->ownEulerRotate({ 45, 75, 60 });
 		ob2->getTransform()->setParent(ob->getTransform());
 		ob3->getTransform()->setParent(ob2->getTransform());
-		//ob->getTransform()->ownEulerRotate({ 45, 75, 60 });
 		ob->getTransform()->setParent(ob3->getTransform());
-		ob2->getTransform()->setPosition({ -50, 0, 0 });
-		ob3->getTransform()->setLocalPosition({ -50, 0, 0 });
+		ob2->getTransform()->setPosition({ 0, 0, 50 });
+		ob3->getTransform()->setLocalPosition({ 0, 0, 50 });
 		//ob->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2->getTransform()->setScale({ 0.5f, 0.5f, 0.5f });
+		ob3->getTransform()->setScale({ 0.25f, 0.25f , 0.25f });
 
 
 		init = true;
@@ -50,21 +50,21 @@ void gameMain(float delta_time) {
 	tnl::Vector3 vec;
 	//ロール
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
-		vec += tnl::Vector3::front * angle;
+		vec += tnl::Vector3::right * angle;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_S)) {
-		vec += -tnl::Vector3::front * angle;
+		vec += tnl::Vector3::left * angle;
 	}
 	//ピッチ
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_A)) {
-		vec += -tnl::Vector3::right * angle;
+		vec += tnl::Vector3::front * angle;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_D)) {
-		vec += tnl::Vector3::right * angle;
+		vec += tnl::Vector3::back * angle;
 	}
 	//ヨー
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
-		vec += -tnl::Vector3::up * angle;
+		vec += tnl::Vector3::down * angle;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_E)) {
 		vec += tnl::Vector3::up * angle;
@@ -76,15 +76,28 @@ void gameMain(float delta_time) {
 		size *= 0.5f;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		ob->getTransform()->ownMove(tnl::Vector3::left * size * 30);
+		ob->getTransform()->ownMove(tnl::Vector3::front * size * 30);
 	}
-	if(tnl::Input::IsKeyDownTrigger(eKeys::KB_BACK)) {
-		ob->getTransform()->ownMove(tnl::Vector3::right * size * 30);
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_BACK)) {
+		ob->getTransform()->ownMove(tnl::Vector3::back * size * 30);
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_P)) {
+		ob2->getTransform()->setParent(nullptr);
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_M)) {
+		ob2->getTransform()->setParent(ob->getTransform());
 	}
 	ob->getTransform()->ownEulerRotate(vec);
 	//ob2->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
 	//ob3->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
 	ob->getTransform()->setScale({ size, size , size });
+
+	clsDx();
+	printfDx("%d\n", ob->getTransform()->getParent() != nullptr ? 0 : 1);
+	printfDx("%d\n", ob2->getTransform()->getParent() != nullptr ? 0 : 1);
+	printfDx("%d\n", ob3->getTransform()->getParent() != nullptr ? 0 : 1);
+
+
 	camera->update();
 
 	ob->render(camera);

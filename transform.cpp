@@ -150,17 +150,18 @@ void ike::Transform::setLocalScale(const tnl::Vector3 scale) {
 
 
 bool ike::Transform::setParent(Transform* parent) {
-	if (getParent() != nullptr) {
+	if (parent != nullptr) {
 		setLocalPosition(parent->toLocalPosition(getPosition()));
 		setLocalScale(parent->toLocalScale(getScale()));
 		setLocalRotation(parent->toLocalRotation(getRotation()));
+		return tree_->setParent(parent->tree_);
 	}
 	else {
 		setLocalPosition(getPosition());
 		setLocalScale(getScale());
 		setLocalRotation(getRotation());
+		return tree_->setParent(nullptr);
 	}
-	return tree_->setParent(parent->tree_);
 }
 
 ike::Transform* ike::Transform::getParent() const {
@@ -252,7 +253,7 @@ void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
 tnl::Vector3 ike::Transform::toWarldPosition(const tnl::Vector3& position) const {
 	tnl::Vector3 scale = getScale();
 	tnl::Vector3 right = this->right() * (position.x * scale.x);
-	tnl::Vector3 up = this ->up() * (position.y * scale.y);
+	tnl::Vector3 up = this->up() * (position.y * scale.y);
 	tnl::Vector3 front = this->front() * (position.z * scale.z);
 	tnl::Vector3 pos = right + up + front;
 	return getPosition() + pos;
@@ -273,8 +274,8 @@ tnl::Vector3 ike::Transform::toLocalScale(const tnl::Vector3& scale) const {
 	tnl::Vector3 thisScale = getScale();
 	return tnl::Vector3(scale.x / thisScale.x, scale.y / thisScale.y, scale.z / thisScale.z);
 }
-tnl::Quaternion ike::Transform::toWorldRotation(const tnl::Quaternion& rotation) const noexcept{
-	return tnl::Quaternion::Subtract(rotation, getRotation());
+tnl::Quaternion ike::Transform::toWorldRotation(const tnl::Quaternion& rotation) const noexcept {
+	return rotation * getRotation();
 }
 tnl::Quaternion ike::Transform::toLocalRotation(const tnl::Quaternion& rotation) const noexcept {
 	return tnl::Quaternion::Subtract(getRotation(), rotation);
