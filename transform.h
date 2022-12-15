@@ -153,11 +153,42 @@ namespace ike {
 #if CONVERT
 
 		//親のこの関数に値を渡してやることで、ワールドから子、子からワールドに変換できる
+		
+		/// <summary>
+		/// このTransformの座標系の位置をワールド座標系での位置に変換する
+		/// </summary>
+		/// <param name="position">ローカル座標系での位置</param>
+		/// <returns>ワールド座標系での位置</returns>
 		tnl::Vector3 toWarldPosition(const tnl::Vector3& position) const;
+		/// <summary>
+		/// このTransformの座標系の位置をローカル座標系での位置に変換する
+		/// </summary>
+		/// <param name="position">ワールド座標系での位置</param>
+		/// <returns>ローカル座標系での位置</returns>
 		tnl::Vector3 toLocalPosition(const tnl::Vector3& position) const;
+		/// <summary>
+		/// このTransformの座標系の大きさをワールド座標系での大きさに変換する
+		/// </summary>
+		/// <param name="scale">ローカル座標系での大きさ</param>
+		/// <returns>ワールド座標系での大きさ</returns>
 		tnl::Vector3 toWarldScale(const tnl::Vector3& scale) const;
+		/// <summary>
+		/// このTransformの座標系の大きさをローカル座標系での大きさに変換する
+		/// </summary>
+		/// <param name="scale">ワールド座標系での大きさ</param>
+		/// <returns>ローカル座標系での大きさ</returns>
 		tnl::Vector3 toLocalScale(const tnl::Vector3& scale) const;
+		/// <summary>
+		/// このTransformの座標系の回転をワールド座標系での回転に変換する
+		/// </summary>
+		/// <param name="rotation">ローカル座標系での回転</param>
+		/// <returns>ワールド座標系での回転</returns>
 		tnl::Quaternion toWorldRotation(const tnl::Quaternion& rotation) const noexcept;
+		/// <summary>
+		/// このTransformの座標系の回転をローカル座標系での回転に変換する
+		/// </summary>
+		/// <param name="rotation">ワールド座標系での回転</param>
+		/// <returns>ローカル座標系での回転</returns>
 		tnl::Quaternion toLocalRotation(const tnl::Quaternion& rotation) const noexcept;
 
 #endif
