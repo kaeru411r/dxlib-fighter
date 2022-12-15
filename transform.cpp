@@ -51,7 +51,7 @@ void ike::Transform::setLocalPosition(const tnl::Vector3 position) {
 
 tnl::Quaternion ike::Transform::getRotation() const {
 	if (getParent() != nullptr) {
-		return tnl::Quaternion::Subtract(getLocalRotation(), getParent()->getRotation());
+		return getParent()->toWorldRotation(getLocalRotation());
 	}
 	else {
 		return getLocalRotation();
@@ -59,7 +59,7 @@ tnl::Quaternion ike::Transform::getRotation() const {
 }
 void ike::Transform::setRotation(const tnl::Quaternion rotation) {
 	if (getParent() != nullptr) {
-		setLocalRotation(tnl::Quaternion::Subtract(getParent()->getRotation(), rotation));
+		setLocalRotation(getParent()->toLocalRotation(rotation));
 	}
 	else {
 		setLocalRotation(rotation);
@@ -276,9 +276,9 @@ tnl::Vector3 ike::Transform::toLocalScale(const tnl::Vector3& scale) const {
 	return tnl::Vector3(scale.x / thisScale.x, scale.y / thisScale.y, scale.z / thisScale.z);
 }
 tnl::Quaternion ike::Transform::toWorldRotation(const tnl::Quaternion& rotation) const noexcept{
-	return tnl::Quaternion::Subtract(getRotation(), rotation);
+	return tnl::Quaternion::Subtract(rotation, getRotation());
 }
 tnl::Quaternion ike::Transform::toLocalRotation(const tnl::Quaternion& rotation) const noexcept {
-	return tnl::Quaternion::Subtract(rotation, getRotation());
+	return tnl::Quaternion::Subtract(getRotation(), rotation);
 }
 #endif

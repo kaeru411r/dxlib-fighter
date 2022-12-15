@@ -36,21 +36,22 @@ void gameMain(float delta_time) {
 		ob2->getTransform()->setPosition({ 10, 20, 30 });
 		ob2->getTransform()->setParent(ob->getTransform());
 		ob3->getTransform()->setParent(ob2->getTransform());
-		tnl::Vector3 position = ob2->getTransform()->getPosition();
-		printfDx("%f, %f, %f\n", position.x, position.y, position.z);
+		//tnl::Vector3 position = ob2->getTransform()->getPosition();
+		//printfDx("%f, %f, %f\n", position.x, position.y, position.z);
+		//ob->getTransform()->ownEulerRotate({ 45, 75, 60 });
 		ob->getTransform()->setParent(ob3->getTransform());
 		ob2->getTransform()->setPosition({ -50, 0, 0 });
 		ob3->getTransform()->setLocalPosition({ -50, 0, 0 });
 		//ob->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2->getTransform()->setScale({ 0.5f, 0.5f, 0.5f });
-		ob2->getTransform()->setPosition({ 30, 20, 10 });
-		position = ob2->getTransform()->getPosition();
-		printfDx("%f, %f, %f\n", position.x, position.y, position.z);
+		//ob2->getTransform()->setPosition({ 30, 20, 10 });
+		//position = ob2->getTransform()->getPosition();
+		//printfDx("%f, %f, %f\n", position.x, position.y, position.z);
 
 
 		init = true;
 	}
-
+	ob2->getTransform()->setRotation(ob2->getTransform()->getRotation());
 
 	tnl::Vector3 vec;
 	//ƒ[ƒ‹
