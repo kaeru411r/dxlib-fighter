@@ -21,14 +21,8 @@ ike::Transform::~Transform() {
 		/// <returns></returns>
 tnl::Vector3 ike::Transform::getPosition() const {
 	if (getParent() != nullptr) {
-		this;
-		ike::Transform* parent = getParent();
-		tnl::Vector3 parentScale = parent->getScale();
-		tnl::Vector3 right = getParent()->right() * (getLocalPosition().x * parentScale.x);
-		tnl::Vector3 up = getParent()->up() * (getLocalPosition().y * parentScale.y);
-		tnl::Vector3 front = getParent()->front() * (getLocalPosition().z * parentScale.z);
-		tnl::Vector3 pos = right + up + front;
-		return getParent()->getPosition() + pos;
+
+		return getParent()->toWarldPosition(getLocalPosition());
 	}
 	else {
 		return getLocalPosition();
@@ -36,12 +30,7 @@ tnl::Vector3 ike::Transform::getPosition() const {
 }
 void ike::Transform::setPosition(const tnl::Vector3 position) {
 	if (getParent() != nullptr) {
-		tnl::Vector3 pos = position - getParent()->getPosition();
-		tnl::Vector3 parentScale = getParent()->getScale();
-		float right = getParent()->right().x * (pos.x * parentScale.x);
-		float up = getParent()->up().y * (pos.y * parentScale.y);
-		float front = getParent()->front().z * (pos.z * parentScale.z);
-		setLocalPosition({ right, up, front });
+		setLocalPosition(getParent()->toLocalPosition(position));
 	}
 	else {
 		setLocalPosition(position);

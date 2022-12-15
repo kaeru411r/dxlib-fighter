@@ -33,30 +33,23 @@ void gameMain(float delta_time) {
 		mesh3->flg_dbg_line_ = dxe::Mesh::fDebugLine::FLG_AXIS;
 		ob3 = new ike::RenderObject(mesh3);
 		//ike::Tree* t = tr_;
+		ob2->getTransform()->setPosition({ 10, 20, 30 });
 		ob2->getTransform()->setParent(ob->getTransform());
 		ob3->getTransform()->setParent(ob2->getTransform());
+		tnl::Vector3 position = ob2->getTransform()->getPosition();
+		printfDx("%f, %f, %f\n", position.x, position.y, position.z);
 		ob->getTransform()->setParent(ob3->getTransform());
 		ob2->getTransform()->setPosition({ -50, 0, 0 });
 		ob3->getTransform()->setLocalPosition({ -50, 0, 0 });
 		//ob->getTransform()->setLocalScale({ 2, 2, 2 });
 		ob2->getTransform()->setScale({ 0.5f, 0.5f, 0.5f });
-		
+		ob2->getTransform()->setPosition({ 30, 20, 10 });
+		position = ob2->getTransform()->getPosition();
+		printfDx("%f, %f, %f\n", position.x, position.y, position.z);
 
 
 		init = true;
 	}
-
-	clsDx();
-	printfDx("ヨー　    　Q,E\n");
-	printfDx("ロール　    A,D\n");
-	printfDx("ピッチ　    W,S\n");
-	printfDx("拡大、縮小　↑,↓\n");
-	tnl::Vector3 position = ob->getTransform()->toWarldPosition(ob->getTransform()->toLocalPosition({0, 0, 0}));
-	tnl::Vector3 position3 = ob->getTransform()->toLocalPosition({0, 0, 0});
-	tnl::Vector3 position2 = ob->getTransform()->getPosition();
-	printfDx("%f %f %f\n", position.x, position.y, position.z);
-	printfDx("%f %f %f\n", position3.x, position3.y, position3.z);
-	printfDx("%f %f %f\n", position2.x, position2.y, position2.z);
 
 
 	tnl::Vector3 vec;
