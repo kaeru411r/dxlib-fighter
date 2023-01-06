@@ -17,6 +17,7 @@ ike::Transform* ike::RenderObject::getTransform() const {
 }
 
 
-void ike::RenderObject::render(const dxe::Camera* camera) {
+bool ike::RenderObject::render(const dxe::Camera* camera) {
 	transform_->render(camera);
+	return true;
 }
