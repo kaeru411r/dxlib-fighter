@@ -77,7 +77,7 @@ void ike::Transform::setLocalRotation(const tnl::Quaternion rotation) {
 tnl::Vector3 ike::Transform::getEulerAngle() const {
 	if (getParent() != nullptr) {
 		tnl::Vector3 angle = getParent()->getEulerAngle() + getLocalEulerAngle();
-		angle = { abs(angle.x), abs(angle.y), abs(angle.z) };
+		//angle = { abs(angle.x), abs(angle.y), abs(angle.z) };
 		return angle;
 	}
 	else {
@@ -96,8 +96,26 @@ void ike::Transform::setEulerAngle(const tnl::Vector3 angle) {
 tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 	tnl::Vector3 angle = getLocalRotation().getEuler();
 	angle = { tnl::ToDegree(angle.x), tnl::ToDegree(angle.y), tnl::ToDegree(angle.z) };
-	angle = { abs(angle.x), abs(angle.y), abs(angle.z) };
-	return angle;
+	//angle = { abs(angle.x), abs(angle.y), abs(angle.z) }; double q0q0 = q0 * q0;
+	double q0 = getRotation().x;
+	double q1 = getRotation().y;
+	double q2 = getRotation().z;
+	double q3 = getRotation().w;
+	double q0q0 = q0 * q0;
+    double q0q1 = q0 * q1;
+    double q0q2 = q0 * q2;
+    double q0q3 = q0 * q3;
+    double q1q1 = q1 * q1;
+    double q1q2 = q1 * q2;
+    double q1q3 = q1 * q3;
+    double q2q2 = q2 * q2;
+    double q2q3 = q2 * q3;
+    double q3q3 = q3 * q3;
+    float z = atan2(2.0 * (q2q3 + q0q1), q0q0 - q1q1 - q2q2 + q3q3);
+    float x = asin(2.0 * (q0q2 - q1q3));
+    float y = atan2(2.0 * (q1q2 + q0q3), q0q0 + q1q1 - q2q2 - q3q3);
+	//return angle;
+	return { -z, y, x};
 }
 void ike::Transform::setLocalEulerAngle(const tnl::Vector3 angle) {
 
@@ -108,6 +126,15 @@ tnl::Quaternion ike::Transform::eulerToQuaternion(tnl::Vector3 euler) {
 	tnl::Quaternion rot = tnl::Quaternion::RotationAxis(tnl::Vector3::front, tnl::ToRadian(euler.z));
 	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::up, tnl::ToRadian(euler.y));
 	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::right, tnl::ToRadian(euler.x));
+	float x = euler.x / 2;
+	float y = euler.y / 2;
+	float z = euler.z / 2; 
+	DirectX::XMFLOAT4 fx4 = DirectX::XMFLOAT4(
+		(cos(x) * cos(y) * cos(z) - sin(x) * sin(y) * sin(z)),
+		(sin(x) * cos(y) * cos(z) - cos(x) * sin(y) * sin(z)),
+		(cos(x) * sin(y) * cos(z) - sin(x) * cos(y) * sin(z)),
+		(cos(x) * cos(y) * sin(z) - sin(x) * sin(y) * cos(z)));
+	rot = tnl::Quaternion(fx4);
 
 	return rot;
 }

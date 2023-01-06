@@ -2,7 +2,6 @@
 #include "tree.h"
 #include "../dxlib_ext/dxlib_ext.h"
 
-//オイラー角制御のビルドスイッチ
 #define EULER false
 #define ROTATE true
 #define CONVERT true

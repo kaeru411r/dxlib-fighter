@@ -90,9 +90,15 @@ void gameMain(float delta_time) {
 	ob->getTransform()->setScale({ size, size , size });
 
 	clsDx();
-	printfDx("%d\n", ob->getTransform()->getParent() != nullptr ? 0 : 1);
-	printfDx("%d\n", ob2->getTransform()->getParent() != nullptr ? 0 : 1);
-	printfDx("%d\n", ob3->getTransform()->getParent() != nullptr ? 0 : 1);
+	tnl::Vector3 euler = ob->getTransform()->getEulerAngle();
+	printfDx("(%f, %f, %f)\n", euler.x, euler.y, euler.z);
+	ob->getTransform()->setEulerAngle(euler);
+	euler = ob->getTransform()->getEulerAngle();
+	printfDx("(%f, %f, %f)\n", euler.x, euler.y, euler.z);
+	euler = ob2->getTransform()->getEulerAngle();
+	printfDx("(%f, %f, %f)\n", euler.x, euler.y, euler.z);
+	euler = ob3->getTransform()->getEulerAngle();
+	printfDx("(%f, %f, %f)\n", euler.x, euler.y, euler.z);
 
 
 	camera->update();
