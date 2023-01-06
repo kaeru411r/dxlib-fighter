@@ -275,7 +275,7 @@ tnl::Vector3 ike::Transform::toLocalScale(const tnl::Vector3& scale) const {
 	return tnl::Vector3(scale.x / thisScale.x, scale.y / thisScale.y, scale.z / thisScale.z);
 }
 tnl::Quaternion ike::Transform::toWorldRotation(const tnl::Quaternion& rotation) const noexcept {
-	return rotation * getRotation();
+	return getRotation() * rotation;
 }
 tnl::Quaternion ike::Transform::toLocalRotation(const tnl::Quaternion& rotation) const noexcept {
 	return tnl::Quaternion::Subtract(getRotation(), rotation);

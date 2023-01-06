@@ -82,10 +82,7 @@ void gameMain(float delta_time) {
 		ob->getTransform()->ownMove(tnl::Vector3::back * size * 30);
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_P)) {
-		ob2->getTransform()->setParent(nullptr);
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_M)) {
-		ob2->getTransform()->setParent(ob->getTransform());
+		ob2->getTransform()->setParent(ob2->getTransform()->getParent() == nullptr ? ob->getTransform() : nullptr);
 	}
 	ob->getTransform()->ownEulerRotate(vec);
 	//ob2->getTransform()->ownEulerRotate(tnl::Vector3::right * 10);
