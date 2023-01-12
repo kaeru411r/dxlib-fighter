@@ -28,7 +28,7 @@ tnl::Vector3 ike::Transform::getPosition() const {
 		return getLocalPosition();
 	}
 }
-void ike::Transform::setPosition(const tnl::Vector3 position) {
+void ike::Transform::setPosition(const tnl::Vector3& position) {
 	if (getParent() != nullptr) {
 		setLocalPosition(getParent()->toLocalPosition(position));
 	}
@@ -57,7 +57,7 @@ tnl::Quaternion ike::Transform::getRotation() const {
 		return getLocalRotation();
 	}
 }
-void ike::Transform::setRotation(const tnl::Quaternion rotation) {
+void ike::Transform::setRotation(const tnl::Quaternion& rotation) {
 	if (getParent() != nullptr) {
 		setLocalRotation(getParent()->toLocalRotation(rotation));
 	}
@@ -69,7 +69,7 @@ void ike::Transform::setRotation(const tnl::Quaternion rotation) {
 tnl::Quaternion ike::Transform::getLocalRotation() const {
 	return localRotation_;
 }
-void ike::Transform::setLocalRotation(const tnl::Quaternion rotation) {
+void ike::Transform::setLocalRotation(const tnl::Quaternion& rotation) {
 	localRotation_ = rotation;
 }
 
@@ -102,20 +102,20 @@ tnl::Vector3 ike::Transform::getLocalEulerAngle() const {
 	double q2 = getRotation().z;
 	double q3 = getRotation().w;
 	double q0q0 = q0 * q0;
-    double q0q1 = q0 * q1;
-    double q0q2 = q0 * q2;
-    double q0q3 = q0 * q3;
-    double q1q1 = q1 * q1;
-    double q1q2 = q1 * q2;
-    double q1q3 = q1 * q3;
-    double q2q2 = q2 * q2;
-    double q2q3 = q2 * q3;
-    double q3q3 = q3 * q3;
-    float z = atan2(2.0 * (q2q3 + q0q1), q0q0 - q1q1 - q2q2 + q3q3);
-    float x = asin(2.0 * (q0q2 - q1q3));
-    float y = atan2(2.0 * (q1q2 + q0q3), q0q0 + q1q1 - q2q2 - q3q3);
+	double q0q1 = q0 * q1;
+	double q0q2 = q0 * q2;
+	double q0q3 = q0 * q3;
+	double q1q1 = q1 * q1;
+	double q1q2 = q1 * q2;
+	double q1q3 = q1 * q3;
+	double q2q2 = q2 * q2;
+	double q2q3 = q2 * q3;
+	double q3q3 = q3 * q3;
+	float z = atan2(2.0 * (q2q3 + q0q1), q0q0 - q1q1 - q2q2 + q3q3);
+	float x = asin(2.0 * (q0q2 - q1q3));
+	float y = atan2(2.0 * (q1q2 + q0q3), q0q0 + q1q1 - q2q2 - q3q3);
 	//return angle;
-	return { -z, y, x};
+	return { -z, y, x };
 }
 void ike::Transform::setLocalEulerAngle(const tnl::Vector3 angle) {
 
@@ -128,7 +128,7 @@ tnl::Quaternion ike::Transform::eulerToQuaternion(tnl::Vector3 euler) {
 	rot *= tnl::Quaternion::RotationAxis(tnl::Vector3::right, tnl::ToRadian(euler.x));
 	float x = euler.x / 2;
 	float y = euler.y / 2;
-	float z = euler.z / 2; 
+	float z = euler.z / 2;
 	DirectX::XMFLOAT4 fx4 = DirectX::XMFLOAT4(
 		(cos(x) * cos(y) * cos(z) - sin(x) * sin(y) * sin(z)),
 		(sin(x) * cos(y) * cos(z) - cos(x) * sin(y) * sin(z)),
@@ -154,7 +154,7 @@ tnl::Vector3 ike::Transform::getScale() const {
 		return getLocalScale();
 	}
 }
-void ike::Transform::setScale(const tnl::Vector3 scale) {
+void ike::Transform::setScale(const tnl::Vector3& scale) {
 	if (getParent() != nullptr) {
 		setLocalScale(getParent()->toLocalScale(scale));
 	}
@@ -166,7 +166,7 @@ void ike::Transform::setScale(const tnl::Vector3 scale) {
 tnl::Vector3 ike::Transform::getLocalScale() const {
 	return localScale_;
 }
-void ike::Transform::setLocalScale(const tnl::Vector3 scale) {
+void ike::Transform::setLocalScale(const tnl::Vector3& scale) {
 	localScale_ = scale;
 }
 
@@ -237,14 +237,14 @@ tnl::Vector3 ike::Transform::front() const {
 //-------------------à⁄ìÆä÷êî---------------------------------------
 
 
-void ike::Transform::move(const tnl::Vector3 value) {
+void ike::Transform::move(const tnl::Vector3& value) {
 	if (value.length() == 0) {
 		return;
 	}
 	setPosition(getPosition() + value);
 }
 
-void ike::Transform::ownMove(const tnl::Vector3 value) {
+void ike::Transform::ownMove(const tnl::Vector3& value) {
 	if (value.length() == 0) {
 		return;
 	}
@@ -258,13 +258,13 @@ void ike::Transform::ownMove(const tnl::Vector3 value) {
 //------------------âÒì]ä÷êî-------------------------------
 
 #if ROTATE
-void ike::Transform::eulerRotate(const tnl::Vector3 value) {
+void ike::Transform::eulerRotate(const tnl::Vector3& value) {
 	if (value.length() == 0) {
 		return;
 	}
 	setRotation(getRotation() * tnl::Quaternion::RotationAxis(tnl::Vector3::Normalize(value), value.length() / 180 * tnl::PI));
 }
-void ike::Transform::ownEulerRotate(const tnl::Vector3 value) {
+void ike::Transform::ownEulerRotate(const tnl::Vector3& value) {
 	if (value.length() == 0) {
 		return;
 	}

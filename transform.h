@@ -11,7 +11,7 @@ namespace ike {
 	/// <summary>
 	/// 座標、姿勢、サイズを管理するクラス
 	/// </summary>
-	class Transform{
+	class Transform {
 
 	public:
 		Transform();
@@ -28,7 +28,7 @@ namespace ike {
 		/// ワールド座標系でのPositionをpositionに変更する
 		/// </summary>
 		/// <param name="position"></param>
-		void setPosition(const tnl::Vector3 position);
+		void setPosition(const tnl::Vector3& position);
 		/// <summary>
 		/// 現在のローカル座標系でのPositionを返す
 		/// </summary>
@@ -52,7 +52,7 @@ namespace ike {
 		/// ワールド座標系でのRotationをrotationに変更する
 		/// </summary>
 		/// <param name="rotation"></param>
-		void setRotation(const tnl::Quaternion rotation);
+		void setRotation(const tnl::Quaternion& rotation);
 		/// <summary>
 		/// 現在のローカル座標系でのRotationを返す
 		/// </summary>
@@ -62,7 +62,7 @@ namespace ike {
 		/// ローカル座標系でのRotationをrotationに変更する
 		/// </summary>
 		/// <param name="rotation"></param>
-		void setLocalRotation(const tnl::Quaternion rotation);
+		void setLocalRotation(const tnl::Quaternion& rotation);
 
 		//--------------EulerAngle-------------------------------------------------
 #if EULER
@@ -99,7 +99,7 @@ namespace ike {
 		/// ワールド座標系でのScaleをscaleに変更する
 		/// </summary>
 		/// <param name="scale"></param>
-		void setScale(const tnl::Vector3 scale);
+		void setScale(const tnl::Vector3& scale);
 		/// <summary>
 		/// 現在のローカル座標系でのScaleを返す
 		/// </summary>
@@ -109,7 +109,7 @@ namespace ike {
 		/// ローカル座標系でのScaleをscaleに変更する
 		/// </summary>
 		/// <param name="scale"></param>
-		void setLocalScale(const tnl::Vector3 scale);
+		void setLocalScale(const tnl::Vector3& scale);
 
 
 		//-----------------tree-------------------------------------------------------
@@ -148,11 +148,11 @@ namespace ike {
 
 
 		//--------------座標系変換----------------------
-		
+
 #if CONVERT
 
 		//親のこの関数に値を渡してやることで、ワールドから子、子からワールドに変換できる
-		
+
 		/// <summary>
 		/// このTransformの座標系の位置をワールド座標系での位置に変換する
 		/// </summary>
@@ -209,32 +209,32 @@ namespace ike {
 
 #if ROTATE
 		/// <summary>
-		/// 現在の姿勢より自身の座標系でvalue度姿勢を変更する(未)
+		/// 現在の姿勢より自身の座標系でvalue度姿勢を変更する
 		/// </summary>
 		/// <param name="value"></param>
-		void ownEulerRotate(const tnl::Vector3 value);
+		void ownEulerRotate(const tnl::Vector3& value);
 #endif
 		/// <summary>
-		/// 現在の座標より自身の座標系でvalue座標を変更する(未)
+		/// 現在の座標より自身の座標系でvalue座標を変更する
 		/// </summary>
 		/// <param name="value"></param>
-		void ownMove(const tnl::Vector3 value);
+		void ownMove(const tnl::Vector3& value);
 
 		//virtual void localEulerRotate(const tnl::Vector3 value);
 		//virtual void localMove(const tnl::Vector3 value);
 
 #if ROTATE
 		/// <summary>
-		/// 
+		/// 現在の座標よりワールド座標系でvalue度姿勢を変更する
 		/// </summary>
 		/// <param name="value"></param>
-		void eulerRotate(const tnl::Vector3 value);
+		void eulerRotate(const tnl::Vector3& value);
 #endif
 		/// <summary>
-		/// 現在の座標よりワールド座標系でvalue座標を変更する(未)
+		/// 現在の座標よりワールド座標系でvalue座標を変更する
 		/// </summary>
 		/// <param name="value"></param>
-		void move(const tnl::Vector3 value);
+		void move(const tnl::Vector3& value);
 
 
 
