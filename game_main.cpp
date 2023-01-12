@@ -6,6 +6,7 @@
 #include "transform.h"
 #include "tree.h"
 #include "renderObject.h"
+#include "gameEngineManager.h"
 
 dxe::Camera* camera = nullptr;
 dxe::Mesh* mesh = nullptr;
@@ -43,7 +44,11 @@ void gameMain(float delta_time) {
 		ob3->getTransform()->setScale({ 0.25f, 0.25f , 0.25f });
 
 		init = true;
+
 	}
+
+	ike::gameEngineManager::getInstance()->update(delta_time);
+
 	ob2->getTransform()->setScale(ob2->getTransform()->getScale());
 
 	tnl::Vector3 vec;
