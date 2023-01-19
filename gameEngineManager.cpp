@@ -3,7 +3,6 @@
 std::shared_ptr<ike::gameEngineManager> ike::gameEngineManager::instance;
 
 ike::gameEngineManager::gameEngineManager() {
-	scenes.emplace_back(std::make_shared<ike::Scene>());
 }
 
 std::shared_ptr<ike::gameEngineManager> ike::gameEngineManager::getInstance() {

@@ -1,6 +1,6 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
-#include "scene.h"
+#include "sceneBase.h"
 
 namespace ike {
 
@@ -15,7 +15,7 @@ namespace ike {
 		gameEngineManager();
 		static std::shared_ptr<gameEngineManager> instance;
 
-		std::list<std::shared_ptr<Scene>> scenes;
+		std::list<std::shared_ptr<SceneBase>> scenes;
 	};
 
 }
