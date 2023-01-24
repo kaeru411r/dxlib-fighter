@@ -131,7 +131,7 @@ namespace ike {
 		/// 現在の直下の子オブジェクトを取得する
 		/// </summary>
 		/// <returns>子オブジェクトのリスト</returns>
-		std::list<std::weak_ptr<ike::Transform>> getChildren() const;
+		std::list<Transform*> getChildren() const;
 
 		/// <summary>
 		/// dataが直下の子オブジェクトか否か
@@ -247,8 +247,7 @@ namespace ike {
 		tnl::Quaternion eulerToQuaternion(tnl::Vector3 euler);
 #endif
 
-//		std::shared_ptr<ike::Tree<Transform>> tree_ = std::shared_ptr<ike::Tree<ike::Transform>>(nullptr);
-		std::shared_ptr < ike::Tree<Transform> > tree_ ;
+		ike::Tree<Transform>* tree_;
 
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_;

@@ -4,13 +4,13 @@
 
 
 ike::Transform::Transform() {
-	//tree_ = std::shared_ptr<ike::Tree<ike::Transform>>(new ike::Tree<ike::Transform>(this));
+	tree_ = new ike::Tree<ike::Transform>(this);
 	localPosition_ = { 0, 0, 0 };
 	localRotation_ = tnl::Quaternion();
 	localScale_ = { 1, 1, 1 };
 }
 ike::Transform::~Transform() {
-	tree_.reset();
+	delete(tree_);
 }
 
 
@@ -196,25 +196,25 @@ bool ike::Transform::setParent(Transform* parent) {
 ike::Transform* ike::Transform::getParent() const {
 	this;
 	if (tree_->getParent() != nullptr) {
-		return (ike::Transform*)(tree_->getParent()->getData().get());
+		return (ike::Transform*)(tree_->getParent()->getData());
 	}
 	else {
 		return nullptr;
 	}
 }
-std::list<std::weak_ptr<ike::Transform>> ike::Transform::getChildren() const {
-	std::list<std::weak_ptr<ike::Transform>> list;
-	for (auto t : tree_->getChildren()) {
-		list.push_back(std::weak_ptr<ike::Transform>(std::make_shared<ike::Transform>(t)));
+std::list<ike::Transform*> ike::Transform::getChildren() const {
+	std::list<ike::Transform*> list;
+	for (ike::Tree<ike::Transform>* t : tree_->getChildren()) {
+		list.push_back((ike::Transform*)t);
 	}
 	return list;
 }
 
 bool ike::Transform::childrenContains(const Transform* data) {
-	return tree_->childrenContains(tree_.get()->getData());
+	return tree_->childrenContains((ike::Transform*)tree_);
 }
 bool ike::Transform::allChildrenContains(const Transform* data) {
-	return tree_->allChildrenContains(tree_->getData());
+	return tree_->allChildrenContains((ike::Transform*)tree_);
 }
 
 

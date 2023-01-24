@@ -1,22 +1,19 @@
 #pragma once
 #include<list>
-#include<memory>
 #include "../dxlib_ext/dxlib_ext.h"
 
 namespace ike {
 
 	template <typename T>
-	class Tree : public std::enable_shared_from_this<Tree<T>> {
+	class Tree {
 
 	public:
-		Tree(std::shared_ptr<T> data) {
-//			data_ = std::shared_ptr<T>(data);
+		Tree(T* data) {
 			data_ = data;
 		}
 
-		Tree(){}
-
-		virtual ~Tree() {}
+		~Tree() {
+		}
 
 		void removeAllChildren() {
 			auto it = children_.begin();
@@ -31,44 +28,44 @@ namespace ike {
 			children_.clear();
 
 		}
-
-		std::list<std::shared_ptr<Tree<T>>> getChildren() const {
+		
+		std::list<Tree<T>*> getChildren() const {
 			return children_;
 		}
 
 
-		bool setParent(std::shared_ptr<Tree<T>> data) {
+		bool setParent(Tree* data) {
 			if (parent_ == data) {
 				return false;
 			}
-			if (allChildrenContains(data)) {
+			if (allChildrenContains((T*)data)) {
 				while (ErrorLogFmtAdd("Error : 渡されたオブジェクトはこのオブジェクトの子オブジェクトです") != -1) {}
 				return false;
 			}
 			if (parent_ != nullptr) {
-				parent_->removeChild(this->shared_from_this());
+				parent_->removeChild(this);
 			}
-			//parent_ = std::make_shared<ike::Tree<std::shared_ptr<T>>>(data);
 			parent_ = data;
 			if (data != nullptr) {
-				if (!childrenContains(data)) {
-					data->addChild(this->shared_from_this());
+				if (!childrenContains((T*)data)) {
+					data->addChild(this);
 				}
 			}
 			return true;
 		}
 
-		std::shared_ptr<Tree<T>> getParent() const {
+		Tree* getParent() const {
+			this;
 			return parent_;
 		}
 
-		bool childrenContains(const std::shared_ptr<T> data) {
+		bool childrenContains(const T* data) {
 			if (data == nullptr) {
 				return false;
 			}
 			auto it = children_.begin();
 			while (it != children_.end()) {
-				if ((*it)->getData() == data) {
+				if ((T*)(*it) == data) {
 					return true;
 				}
 				it++;
@@ -76,13 +73,13 @@ namespace ike {
 			return false;
 
 		}
-		bool allChildrenContains(const std::shared_ptr<T> data) {
+		bool allChildrenContains(const T* data) {
 			if (data == nullptr) {
 				return false;
 			}
 			auto it = children_.begin();
 			while (it != children_.end()) {
-				if ((*it)->getData() == data) {
+				if ((T*)(*it) == data) {
 					return true;
 				}
 				else if ((*it)->allChildrenContains(data)) {
@@ -93,22 +90,28 @@ namespace ike {
 			return false;
 		}
 
-		std::shared_ptr<T> getData() {
+		T* getData() {
 			return data_;
 		}
 
 	private:
 
-		void addChild(std::shared_ptr<Tree<T>> data) {
+		T* data_ = nullptr;
+
+
+		Tree* parent_ = nullptr;
+		std::list<Tree*> children_;
+
+		void addChild(Tree* data) {
 			if (data == nullptr) {
 				return;
 			}
-			if (!childrenContains(data)) {
+			if (!childrenContains((T*)data)) {
 				children_.emplace_back(data);
 			}
 
 		}
-		void removeChild(std::shared_ptr<Tree<T>> data) {
+		void removeChild(Tree* data) {
 			if (children_.empty()) {
 				return;
 			}
@@ -121,14 +124,5 @@ namespace ike {
 				it++;
 			}
 		}
-
-	private:
-
-
-		std::shared_ptr<T> data_ = nullptr;
-
-
-		std::shared_ptr<Tree<T>> parent_ = nullptr;
-		std::list<std::shared_ptr<Tree<T>>> children_;
 	};
 }
