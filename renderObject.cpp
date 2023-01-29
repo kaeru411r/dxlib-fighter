@@ -4,15 +4,15 @@
 
 
 ike::RenderObject::RenderObject(dxe::Mesh* mesh) {
-	transform_ = new ike::MeshTransform(mesh);
+	transform_ = std::dynamic_pointer_cast<ike::MeshTransform>(ike::MeshTransform::Create(/*mesh*/));
 }
 
 ike::RenderObject::~RenderObject() {
-	delete(transform_);
+	transform_.reset();
 }
 
 
-ike::Transform* ike::RenderObject::getTransform() const {
+std::shared_ptr<ike::MeshTransform> ike::RenderObject::getTransform() const {
 	return transform_;
 }
 

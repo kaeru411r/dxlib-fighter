@@ -3,12 +3,15 @@
 //using namespace ike;
 
 
-ike::Transform::Transform() {
-	//tree_ = std::shared_ptr<ike::Tree<ike::Transform>>(new ike::Tree<ike::Transform>(this));
+void ike::Transform::constructor() {
+	tree_ = std::shared_ptr<ike::Tree<ike::Transform>>(ike::Tree<ike::Transform>::Create(/*shared_from_this()*/)); 
 	localPosition_ = { 0, 0, 0 };
 	localRotation_ = tnl::Quaternion();
 	localScale_ = { 1, 1, 1 };
 }
+//
+//ike::Transform::Transform() {
+//}
 ike::Transform::~Transform() {
 	tree_.reset();
 }
@@ -178,7 +181,7 @@ void ike::Transform::setLocalScale(const tnl::Vector3& scale) {
 //------------------êeéqä÷òA--------------------------------------------
 
 
-bool ike::Transform::setParent(Transform* parent) {
+bool ike::Transform::setParent(std::shared_ptr<ike::Transform> parent) {
 	if (parent != nullptr) {
 		setLocalPosition(parent->toLocalPosition(getPosition()));
 		setLocalScale(parent->toLocalScale(getScale()));
@@ -193,10 +196,10 @@ bool ike::Transform::setParent(Transform* parent) {
 	}
 }
 
-ike::Transform* ike::Transform::getParent() const {
+std::shared_ptr<ike::Transform> ike::Transform::getParent() const {
 	this;
 	if (tree_->getParent() != nullptr) {
-		return (ike::Transform*)(tree_->getParent()->getData().get());
+		return tree_->getParent()->getData();
 	}
 	else {
 		return nullptr;
@@ -205,16 +208,16 @@ ike::Transform* ike::Transform::getParent() const {
 std::list<std::weak_ptr<ike::Transform>> ike::Transform::getChildren() const {
 	std::list<std::weak_ptr<ike::Transform>> list;
 	for (auto t : tree_->getChildren()) {
-		list.push_back(std::weak_ptr<ike::Transform>(std::make_shared<ike::Transform>(t)));
+		list.push_back(t->getData());
 	}
 	return list;
 }
 
-bool ike::Transform::childrenContains(const Transform* data) {
-	return tree_->childrenContains(tree_.get()->getData());
+bool ike::Transform::childrenContains(const std::shared_ptr<ike::Transform> data) {
+	return tree_->childrenContains(tree_);
 }
-bool ike::Transform::allChildrenContains(const Transform* data) {
-	return tree_->allChildrenContains(tree_->getData());
+bool ike::Transform::allChildrenContains(const std::shared_ptr<ike::Transform> data) {
+	return tree_->allChildrenContains(tree_);
 }
 
 

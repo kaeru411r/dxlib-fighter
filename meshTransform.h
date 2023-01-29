@@ -6,16 +6,23 @@ class Transfrom;
 class Camera;
 namespace ike {
 
+
 	class MeshTransform : public ike::Transform {
 
 	public:
 
-		MeshTransform(dxe::Mesh* mesh);
+		//MeshTransform(dxe::Mesh* mesh);
+
+		void constructor(std::any value) override;
 
 
 		void render(const dxe::Camera* camera);
 
 		
+
+	protected:
+
+		MeshTransform() {};
 
 
 	private:

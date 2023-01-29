@@ -10,13 +10,13 @@ namespace ike {
 		RenderObject(dxe::Mesh* mesh);
 		~RenderObject();
 
-		Transform* getTransform() const;
+		std::shared_ptr<ike::MeshTransform> getTransform() const;
 
 		bool render(const dxe::Camera* camera);
 
 	private:
 
-		ike::MeshTransform* transform_;
+		std::shared_ptr<ike::MeshTransform> transform_;
 		
 	};
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "tree.h"
 #include "../dxlib_ext/dxlib_ext.h"
+#include"sharedFactory.h"
 
 #define EULER false
 #define ROTATE true
@@ -8,13 +9,17 @@
 
 namespace ike {
 
+
 	/// <summary>
 	/// 座標、姿勢、サイズを管理するクラス
 	/// </summary>
-	class Transform {
+	class Transform : public ike::SharedFactory<Transform> {
 
 	public:
-		Transform();
+
+		void constructor() override;
+
+		//static Create
 		virtual ~Transform();
 
 		//-------------Position--------------------------------------------------
@@ -120,13 +125,13 @@ namespace ike {
 		/// </summary>
 		/// <param name="parent"></param>
 		/// <returns>成功したか</returns>
-		bool setParent(Transform* parent);
+		bool setParent(std::shared_ptr<ike::Transform> parent);
 
 		/// <summary>
 		/// 現在の親オブジェクトを取得する
 		/// </summary>
 		/// <returns>親オブジェクト</returns>
-		Transform* getParent() const;
+		std::shared_ptr<ike::Transform> getParent() const;
 		/// <summary>
 		/// 現在の直下の子オブジェクトを取得する
 		/// </summary>
@@ -138,13 +143,13 @@ namespace ike {
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		bool childrenContains(const Transform* data);
+		bool childrenContains(const std::shared_ptr<ike::Transform> data);
 		/// <summary>
 		/// dataがこのオブジェクト下に存在するか否か
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		bool allChildrenContains(const Transform* data);
+		bool allChildrenContains(const std::shared_ptr<ike::Transform> data);
 
 
 		//--------------座標系変換----------------------
@@ -239,16 +244,21 @@ namespace ike {
 
 
 	protected:
-
+		public:
+		Transform() {};
 
 
 	private:
+
+		//Transform();
+
+
 #if EULER
 		tnl::Quaternion eulerToQuaternion(tnl::Vector3 euler);
 #endif
 
 //		std::shared_ptr<ike::Tree<Transform>> tree_ = std::shared_ptr<ike::Tree<ike::Transform>>(nullptr);
-		std::shared_ptr < ike::Tree<Transform> > tree_ ;
+		std::shared_ptr <ike::Tree<Transform>> tree_ ;
 
 		tnl::Quaternion localRotation_;
 		tnl::Vector3 localPosition_;

@@ -1,9 +1,13 @@
 #include "meshTransform.h"
 #include "game_main.h"
 
+//
+//ike::MeshTransform::MeshTransform(dxe::Mesh* mesh) {
+//	mesh_ = mesh;
+//}
 
-ike::MeshTransform::MeshTransform(dxe::Mesh* mesh) {
-	mesh_ = mesh;
+void ike::MeshTransform::constructor(std::any value) {
+	mesh_ = std::any_cast<dxe::Mesh*>(value);
 }
 
 
